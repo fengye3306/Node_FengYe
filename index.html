@@ -48,7 +48,7 @@
       text-align: center;
     }
 
-    :root {
+    :root { 
       --base-font-size: 13px;
     }
 
@@ -201,6 +201,26 @@
   <script src="static/docsify-pagination/dist/docsify-pagination.min.js"></script>
   <!--字数统计-->
   <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
+
+
+  <!--PDF嵌入、
+    - github - https://github.com/lazypanda10117/docsify-pdf-embed
+
+    ### Here are some of your previous markdown contents
+        blah blah blah
+        ```pdf
+          path-to-the-pdf-file
+        (``` to close the codeblock)
+  -->
+  <!-- PDFObject.js is a required dependency of this plugin -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pdfobject/2.1.1/pdfobject.min.js"></script> 
+  <!-- This is the source code of the pdf embed plugin -->
+  <script src="path-to-file/docsify-pdf-embed.js"></script>
+  <!-- or use this if you are not hosting the file yourself -->
+  <script src="//unpkg.com/docsify-pdf-embed-plugin/src/docsify-pdf-embed.js"></script>
+
+
+
 </body>
 
 </html>
