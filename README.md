@@ -1,5 +1,11 @@
 # 枫叶笔记
 
+## 笔记地址
+
+```Link
+https://fengye3306.github.io/Node_FengYe/#/
+```
+
 ## 部署个人笔记
 
 ```link
