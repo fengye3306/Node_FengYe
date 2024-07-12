@@ -1,5 +1,12 @@
+# Cmake
 
-*阅读CloudCompare源码，解析CloudCompare开源工程Cmake配置方案*
+## 
+
+## Cmake 基础语法
+
+
+
+## Cmake 模块新知
 
 
 
@@ -20,7 +27,7 @@ include(CMakePolicies NO_POLICY_SCOPE)
 这个选项表示被包含的文件中的策略设置不应影响到包含它的父级作用域。
 
 
-### 项目文件的优雅处理
+### 工程文件的优雅处理
 
 ```cc
 
@@ -74,33 +81,29 @@ else()
 	)
 endif()
 ```
+### Vscode cmake工具配置
 
 
-### 链接器标志（Linker flags）    
 
-*set_target_properties 设置连接器标志，其有很多用途*    
-源码使用微软的Visual C++编译器编译${PROJECT_NAME}项目时，添加一个链接器标志"/MANIFEST:NO"。这个标志告诉链接器不生成manifest文件。    
+
+
+### find_package 确定对应包名
+
+是Qt?还是qt?是OpenCV?亦或是opencv?你是否也因为这件事头疼过？    
+
+*nodeeditor* 是一个第三方库，我将其编译为动态链接库，cmake项目欲以find_package将其引入。   
 ```cmake
-# set_target_properties 
-if (WIN32)
-	if (MSVC)
-		set_target_properties( ${PROJECT_NAME} PROPERTIES LINK_FLAGS " /MANIFEST:NO" )
-	endif()
-endif()
+find_package(nodeeditor REQUIRED)    
 ```
+error！！！*nodeeditor*库未找到。   
+你很沮丧,不知所措。     
 
-> 扩展_连接器控制更多作用   
+find_package的调用其实基于*Config.cmake*文件，*nodeeditor* 库编译后形成的config寻址文件名为：*QtNodesConfig.cmake* ，find_package调用时应该截取`QtNodes`这一字符。   
 
-1. 控制符号解析：
-链接器标志可以改变链接器的符号解析方式。例如，-l标志可以改变链接器搜索库的顺序   
+```cmake
+find_package(QtNodes REQUIRED)  
+```
+此时成功寻址。   
 
-2. 控制优化：  
-链接器标志可以影响链接器的优化行为。例如，-flto标志启用链接时优化（LTO），-gc-sections标志可以让链接器去除未使用的代码段。
-
-3. 控制输出：  
-链接器标志可以影响链接器的输出。例如，-g标志可以让链接器生成调试信息，-Map标志可以让链接器生成链接映射。   
-
-
-4. 控制链接过程：  
-链接器标志可以影响链接过程。例如，-Wl,--no-undefined标志可以让链接器在遇到未解析的符号时停止，-Wl,--verbose标志可以让链接器显示链接过程的详细信息。  
+下次需要用到find_package 报错头疼时，不妨去看看config文件前缀。
 

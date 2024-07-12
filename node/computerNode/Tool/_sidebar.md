@@ -1,7 +1,6 @@
 
-* [Tools](./Tools.md)
-* [Vcpkg](./Vcpkg.md)
+* [Cmake](./Cmake.md)
 * [git](./git.md)
 * [conda](./conda.md)
 * [Docker](./docker.md)
-* [Confyui](./Confyui.md)
+* [Vcpkg](./Vcpkg.md)
