@@ -8,7 +8,7 @@
 申请一个大额内存空间，再把大空间切为小空间。   
 当需要使用时候直接分配使用，不再需要额外向系统申请内存空间，使用过后放回池子中。   
 
-![logo](./img/Allocator/01.png ':size=WIDTHxHEIGHT')
+![logo](./img/01.png ':size=WIDTHxHEIGHT')
 
 ## 源码地址
 
@@ -122,7 +122,7 @@ Class_Test_Array::ObjectPool Class_Test_Array::pool;
 
 区块策略在于**不限制对象池大小上限**。   
 
-![logo](./img/Allocator/01.png ':size=WIDTHxHEIGHT')
+![logo](./img/02.png ':size=WIDTHxHEIGHT')
 
 
 
