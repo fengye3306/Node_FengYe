@@ -8,3 +8,6 @@
 当需要使用时候直接分配使用，不再需要额外向系统申请内存空间，使用过后放回池子中。   
 
 ![logo](./img/Allocator/01.png ':size=WIDTHxHEIGHT')
+
+
+## 

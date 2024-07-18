@@ -2,6 +2,23 @@
 
 ## Cmake 基础语法
 
+### 构建
+> 构建动态链接库
+
+```cmake
+    add_library(${PROJECT_NAME} SHARED
+        ${header_list}
+        ${source_list}
+    )
+```
+
+### 文件
+
+
+
+### 
+
+
 ## Cmake 模块新知
 ### include作用域互不干扰策略
 
