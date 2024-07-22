@@ -19,15 +19,33 @@ joinable() 的含义
 
 cpp11开始，提供了语言级别的`std::thread`类以支持多线程。std::thread构造函数的参数可以是任何lambda表达式，当线程启动时就会执行lambda表达式中的内容。   
 
-> std::thread 基础语法
 
-* `bool std::thread::joinable` 此线程对象**是否持有一个线程**，意思是该std::thread对象关联并控制一个正在运行或已经运行完毕但尚未处理的线程。   
+
+### bool std::thread::joinable  
+
+*bool std::thread::joinable`*   
+joinable用于检查线程对象是否**持有**一个可操作的线程。它返回一个布尔值，表示线程对象当前是否关联着一个线程。如果返回 true，表示该线程对象持有一个有效的线程，且该线程尚未被 join() 或 detach() 处理。   
 
 ```cpp
-// 创建std::thread对象时，
-// tTest会持有并启动一个新的线程来执行threadFunction函数。
-std::thread tTest(threadFunction);
+// 1. 默认构造的线程对象
+// 这种情况下，t1.joinable() 返回 false，因为 t1 没有被初始化为持有任何线程。
+std::thread t1;
+
+// 2. 持有有效线程的对象
+// 这种情况下，t2.joinable() 返回 true，
+// 因为 t2 持有一个有效的线程，该线程正在运行或已经运行完毕但未被处理。
+std::thread t2(threadFunction);
+
+// 3.调用 join() 后 
+// 这种情况下，t2.joinable() 返回 false，因为线程已经被处理并且资源已经被回收 不再被持有
+t2.join();
+
+// 4.调用 detach() 后
+// 这种情况下，t.joinable() 返回 false，因为线程已经被分离，不再受 t2 持有
+t2.detach();
 ```
+### bool std::thread::joinable  
+
 
 
 ```cpp
