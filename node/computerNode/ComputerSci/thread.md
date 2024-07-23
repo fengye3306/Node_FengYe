@@ -448,9 +448,47 @@ std::thread t1([&](){
 });
 ```
 
+### 读写锁优化  
 
-### 封装线程安全的std::vector
+
+读写锁的出现用于优化程序执行效率。   
+我有一个厕所，可以**喝**和**拉**，读写锁我有如下规则    
+1. 可以多个人同时喝
+2. 同一时间只能由一人拉
+3. 拉的时候不能喝   
+
+可以多个人同时进厕所喝，岂不是比不管三七二十一只让一个人进来做事要来的效率高？   
+因为我就是来喝水的，喝水不会产生**脏数据**，拉却会，例如一个std::vector我读的同时又往里写，读到的就有可能是赃数据了。        
+
+读写锁`std::shared_mutex`       
+上锁时指定我当前的需求时 拉 还是喝， 负责调度资源的读写锁会帮你判断要不要等待。      
 
 ```cpp
+std::vector <int> vec_int_;
+std::shared_mutex mtx;
 
+void push_back(int val){
+    mtx.lock();                  // 我是来拉(写)的
+    vec_int_.push_back(val);
+    mtx.unlock();
+}
+
+size_t size() const{
+    mtx.lock_shared();          // 我是来喝（读）的
+    int size_ret = vec_int_.size();
+    mtx.unlock_shared();
+    return size_ret;
+}
 ```
+
+
+
+
+
+
+
+
+
+
+
+
