@@ -115,11 +115,15 @@ std::future<int> fret = std::async([&](){
 });
 ```
 
-### 显式的等待异步   
+### 等待异步   
+
+> 等待线程退出 并获取返回值
 
 `future::get` 接口调用后将会获取异步线程下运行的 函数 的返回值。   
 **如果函数还没执行完成呢？** get接口的调用线程将会阻塞，直到函数返回。    
 这就是显式的异步等待。   
+
+另一个接口是`future::wait`,其与 get相同，区别在于wait等待不会获取返回值。
 
 ```c++
 
@@ -156,4 +160,135 @@ int main() {
 }
 
 ```
+
+> 超时时间下的等待
+
+wait与get均会无限等待，可以使用`future_status future::wait_for`设定最长等待时间 
+
+```cpp
+/**
+// names for timed wait function returns
+_EXPORT_STD enum class future_status 
+{ 
+    ready,      // 完毕
+    timeout,    // 放弃了
+    deferred    
+};
+*/
+
+// 尝试等待100ms
+fret.wait_for(std::chrono::milliseconds(100));
+```
+
+### std::future的懒惰模式   
+
+不直接创建一个子线程运行函数，在创建 std::future对象时，将std::async接口的第一个参数设为`std::launch::deferred`，使得在把对函数体的执行推迟到显式的调用std::future::get后  
+这是编程范式的意义下的异步，并非基于多线程的异步。   
+
+### 拆开std::async的包装  
+
+std::async函数做了什么事情，它是如何实现这种异步的？  
+`std::promise` 是一个模板类型，其用途在线程间进行安全的值传递。     
+std::promise<void>是存在的，它的std::promise::set_value不接受任何值，仅仅用于同步   
+
+```cpp
+std::promise<int> pret;
+std::thread t ([&](){
+    // 执行耗时操作
+    std::this_thread::sleep_for(std::chrono::seconds(2));  
+        
+    // 我的返回值  
+    int ret = 404; 
+    pret.set_value(ret);
+});
+
+std::future<int>  fret = pret.get_future();
+```
+
+
+## 互斥量   
+
+* *线程安全（MT-safe）*  
+* *数据竞争（data-race）*
+
+`std::vector`不是线程安全的容器,例如当std::vector需要扩容时，有潜在的多个线程同时对一个std::vector执行free从而引发崩溃。   
+
+### 上锁思想的本质   
+
+上锁的本质在于阻止两个线程同时进入一个代码段，一个代码段就是厕所的坑位，当线程A进去后就把**厕所门**给锁上，解完手后再把厕所门解开。   
+厕所门 就是上锁的本质，厕所门是**锁对象**，其有*上锁（lock）*，*未上锁（unlock）*两种状态。当遇到厕所门处于锁定时，线程就会在门前等待，直到门打开。   
+
+```cpp
+std::vector<int> Vec_int_; // 厕所
+std::mutex mtx;            // 厕所门
+
+std::thread t1([&](){   
+    for( int i = 0; i < 1000; i++)
+        mtx.lock();     // 随手开门
+        Vec_int_.push_back(1);
+        mtx.unlock();   // 关门
+    }
+});
+
+std::thread t2([&](){   
+    for( int i = 0; i < 1000; i++)
+        mtx.lock();         
+        Vec_int_.push_back(2);
+        mtx.unlock();
+    }
+});
+
+```
+
+### RAII 锁   
+
+*RAII （Resource Acquisition Is Initialization）（资源获取即初始化）*  
+RAII是一种重要的C++编程思想，用于管理资源的生命周期，以确保资源在对象的生命周期内得到正确的分配和释放。例如，智能指针。   
+RAII的核心思想是将资源的获取与对象的生命周期绑定在一起。当一个对象被创建时，它会自动获取资源；当对象被销毁时，它会自动释放资源。这种方式确保了资源的正确管理，避免了资源泄漏和其他相关问题。   
+
+上锁是否是一种锁资源的获取？    
+下锁是否是一种锁资源的释放？   
+这就是 锁 ，在RAII思想中的体现。   
+  
+```cpp
+
+/** std::lock_guard 锁套工具
+*/
+
+std::vector<int> Vec_int_; // 厕所
+std::mutex mtx;            // 厕所门
+
+std::thread t1([&](){   
+    for( int i = 0; i < 1000; i++)
+        std::lock_guard grd(mtx);   // 构造函数中 调用std::mutex::lock
+        Vec_int_.push_back(1);
+    }                               // 离开作用域时析构，析构函数中调用std::mutex::unlock
+});
+
+// 也可以用空花括号碰瓷作用域退出
+{
+    std::lock_guard grd(mtx);   // 构造函数中 调用std::mutex::lock
+    Vec_int_.push_back(1);
+}
+
+
+/** std::lock_guard 也存在一个问题 ———— 死板，不析构不解锁，无法手动解锁 
+*/
+{
+    std::lock_guard grd(mtx);   // 构造函数中 调用std::mutex::lock
+    int a = 1; 
+    Vec_int_.push_back(1);    
+}   
+// 因为要用作用域碰瓷std::lock_guard的析构函数，我在作用域中创建的对象外部无法访问，有时候就挺烦
+// 可否有一个 锁工具 灵活一点，既可以碰瓷析构函数，又可以手动下锁？   有，std::unique_lock 
+
+/** std::unique_lock 锁工具
+*/
+std::unique_lock<std::mutex> qrd(mtx);   // 构造函数中 调用std::mutex::lock
+int a = 1; 
+Vec_int_.push_back(1);  
+qrd.unlock();       // 可以手动解锁
+```
+
+
 
