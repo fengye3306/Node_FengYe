@@ -11,7 +11,8 @@ pthread（POSIX threads，即POSIX线程）是POSIX标准中的一个重要部�
 
 ## 现代std::thread  
 
-cpp11开始，提供了语言级别的`std::thread`类以支持多线程。std::thread构造函数的参数可以是任何lambda表达式，当线程启动时就会执行lambda表达式中的内容。   
+cpp11开始，提供了语言级别的`std::thread`类以支持多线程。std::thread构造函数的参数可以是任何lambda表达式，当线程启动时就会执行lambda表达式中的内容。     
+异步的目的未必完全是为了跑满多个核从而提升程序执行效率，并行是另一个目的，当迅雷进行下载的同时，你任然能操作它的主界面，这就是并行。   
 
 ### std::thread生命周期
 
@@ -92,4 +93,67 @@ int main() {
 }
 ```
 
+
+## 异步   
+
+
+### 构建异步对象 
+
+std库下 std::async 接口接受一个带返回值的lambda表达式，自身返回一个std::future对象。   
+lambda的函数体将在另一个线程中默认的自发执行。     
+
+```c++
+#include <future>
+#include <thread>
+
+std::future<int> fret = std::async([&](){
+    std::cout << "Run start ************" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(2));  // 阻塞两秒
+    std::cout << "Run endl  ************" << std::endl;
+
+    return 404; // 返回值
+});
+```
+
+### 显式的等待异步   
+
+`future::get` 接口调用后将会获取异步线程下运行的 函数 的返回值。   
+**如果函数还没执行完成呢？** get接口的调用线程将会阻塞，直到函数返回。    
+这就是显式的异步等待。   
+
+```c++
+
+/** 执行结果：
+Run start ************
+Run endl  ************
+async::get(): 404
+耗时: 0.999904 秒 
+*/
+#include <future>
+#include <thread>
+#include <iostream>
+
+int main() {
+
+    std::future<int> fret = std::async([&](){
+        std::cout << "Run start ************" << std::endl;
+        std::this_thread::sleep_for(std::chrono::seconds(2));  // 阻塞两秒
+        std::cout << "Run endl  ************" << std::endl;
+
+        return 404; // 返回值
+    });
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));  // 阻塞一秒 
+
+    auto start = std::chrono::high_resolution_clock::now(); 
+    std::cout << "async::get(): " << fret.get() << std::endl; // 此时会触发（2-1=1秒阻塞）
+    auto end = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double> elapsed = end - start;
+    std::cout << "耗时: " << elapsed.count() << " 秒" << std::endl;
+
+    return 0;
+}
+
+```
 
