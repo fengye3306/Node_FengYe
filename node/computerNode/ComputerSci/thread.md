@@ -316,11 +316,141 @@ if(mtx.try_lock_for(std::chrono::seconds(2)){
     std::cout << "等待超时";
 }   
 ```
+另一个是`std::mutex::try_lock_until`接受的是时间点，在某个时间点之前我都接受等待。   
+
+
+
+### RAII锁工具 使用不同上厕锁方案   
+
+```cpp
+std::mutex mtx;    
+
+// RAII锁工具的第二个形参决定了上锁方式
+std::unique_lock<std::mutex> qrd(mtx,std::try_to_lock); 
+if(qrd.owns_lock()){    // 使用owns_lock接口来得知是否得到了厕锁使用权
+
+}else{
+     
+}
+
+```
+
  
+### 死锁（dead-lock）
+
+如下写法比较刻意，问题的本质也确实是这样。   
+交错执行下，t1在等mtx2，t2在等mtx1，它们两个在无限的等下去，资源永远也释放不了。   
+
+> 多线程间互锁
 
 
+```cpp
+/** 死锁的本质原因
+*/
+std::mutex mtx1;           
+std::mutex mtx2;           
+
+std::thread t1([&](){   
+    for( int i = 0; i < 1000; i++)
+        // mtx1还未释放就又去持有 mtx2 属于同时持有两个锁
+        mtx1.lock();     
+        mtx2.lock();     
+
+        mtx1.unlock();  
+        mtx2.unlock();   
+    }
+});
+
+std::thread t2([&](){   
+    for( int i = 0; i < 1000; i++)
+        mtx2.lock();    
+        mtx1.lock();    
+
+        mtx2.unlock();   
+        mtx1.unlock();  
+    }
+});
+```
+
+> **如何避免多线程间互相死锁？**    
+
+1. 最简单的办法就是，一个线程永远**不要同时持有两个锁**，即不要同时上两个厕所，不这样做就绝对不可能死锁！   
+
+```cpp
+    for( int i = 0; i < 1000; i++)
+        mtx1.lock();        // 不同时持有锁
+        mtx1.unlock();  
+
+        mtx2.lock();     
+        mtx2.unlock();   
+    }
+```
+
+2. 如果实在要同时持有多个锁，上锁的顺序一定要一样，这样也能避免死锁。官方库接口std::lock 官方为锁的排序负责
+
+```cpp
+std::thread t1([&](){   
+    for( int i = 0; i < 1000; i++)
+        // 上锁统一用lock
+        std::lock(mtx1, mtx2);
+
+        // 解锁手调
+        mtx1.unlock();  
+        mtx2.unlock();   
+    }
+});
+
+// 当然......同时上多个锁这件事也是有RAII版本 的对象实现的  
+std::thread t1([&](){   
+    for( int i = 0; i < 1000; i++)
+        std::scoped_lock grd(mtx1, mtx2);
+        
+        /* RUN
+        */
+
+        // 析构时自动调用所有unlock
+    }
+});
+
+```
 
 
+> 线程自锁   
 
 
+线程也会自锁，如下可以得知，run2调用run1必然导致死锁。      
+1. 带锁函数同样调用带锁函数时就要小心了！！！不过这个好查。 注意写注释     
+2. 使用更先进的锁， `std::recursive_mutex`这个锁工具就厉害了，是信号量锁。  
+    它会自动判断是不是同一个线程多次lock,如果是则是让计数器加一，unlock让计数器减一，减到0则才是真正的解锁！  
+    相比于一般的 std::mutex 它会有性能损失。   
 
+```cpp
+// std::recursive_mutex 就不会在这里死锁了
+std::mutex mtx1;    
+
+void run1();
+void run2();
+
+void run1(){
+    mtx1.lock();
+    run2();
+    mtx1.unlock();
+}
+
+void run2(){
+    mtx1.lock();
+    // ......
+    mtx1.unlock();
+}
+
+std::thread t1([&](){   
+    run1();
+});
+```
+
+
+### 封装线程安全的std::vector
+
+```cpp
+
+```
