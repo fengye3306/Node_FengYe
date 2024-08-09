@@ -15,7 +15,8 @@
 
 ### 边界外推和边界处理
 
-OpenCV对于卷积产生的边界问题时，给出的答案是：*边界外推*，即添加虚幻边界，使得这个虚幻边界用于卷积问题。  
+OpenCV对于卷积产生的边界问题时，给出的答案是：*边界外推*，即添加虚幻边界，使得这个虚幻边界用于卷积问题。      
+
 ```cpp
 void cv::copyMakeBorder(
     cv::InputArray src,       // 源图像
@@ -73,8 +74,83 @@ void cv::copyMakeBorder(
     **优点：**对图像本身不做边界改变，适合独立块处理。  
     **缺点：**不改变边界，因此不适合需要扩展边界的操作。  
 
+
+
 ## **阈值化操作**
 
+阈值化本质是*非线性核*，其对`1*1`大小的核进行卷积处理，根据相较于阈值的高低做出相应处理。     
+计算机视觉领域，很多方法都可以解释为一系列卷积运算，最后一次操作通常是阈值化处理     
+
+```cpp
+double cv::threshold( 
+    InputArray _src,        // 输入矩阵
+    OutputArray _dst,       // 输出矩阵
+    double thresh,          // 阈值
+    double maxval,          // 阈值
+    int type                // 阈值化卷积核接口调用枚举标志
+    )
+```
+
+> OpenCV阈值化卷积核接口调用枚举标志 参数标识
+
+```
+/** Threshold types */
+enum
+{
+    /** 
+    描述：将图像中的像素值与阈值进行比较，如果像素值大于阈值，则设置为 maxval，否则设置为 0。   
+    效果：得到一个二值图像。 
+    */
+    CV_THRESH_BINARY      =0,  /**< value = value > threshold ? max_value : 0       */
+
+    /** 
+    描述：与 THRESH_BINARY 相反。如果像素值大于阈值，则设置为 0，否则设置为 maxval。     
+    效果：得到一个反转的二值图像。
+    */
+    CV_THRESH_BINARY_INV  =1,  /**< value = value > threshold ? 0 : max_value       */
+
+    /** 
+    描述：将像素值与阈值进行比较。如果像素值大于阈值，则将其截断为阈值（即设置为阈值），否则不变。      
+    效果：像素值高于阈值的部分被截断到阈值。  
+    */
+    CV_THRESH_TRUNC       =2,  /**< value = value > threshold ? threshold : value   */
+
+    /** 
+    描述：如果像素值大于阈值，则保持原值；否则将其设置为 0。      
+    效果：像素值低于阈值的部分被置为 0，其他部分保持不变。  
+    */
+    CV_THRESH_TOZERO      =3,  /**< value = value > threshold ? value : 0           */
+
+    /** 
+    描述：与 THRESH_TOZERO 相反。如果像素值大于阈值，则保持原值；否则将其设置为 maxval。     
+    效果：像素值低于阈值的部分被设置为 maxval，其他部分保持不变。
+    */
+    CV_THRESH_TOZERO_INV  =4,  /**< value = value > threshold ? 0 : value           */
+
+    /** 
+    描述：掩码  
+    效果：其实你不用关注这个枚举值，这是OpenCV在源码中用于分割枚举阈值的 掩码位
+        在源码中OpenCV通过 type &= THRESH_MASK;  相当于 0000 1111 & 0000 0111 = 0000 0111
+        用于筛选和提取阈值处理方式的标志位。由于阈值处理方式的标志位在 type 的低三位中，所以掩码只需要保留这三位的信息。
+        其他的位（如自动阈值计算方法的标志位）会被清除，从而只保留与阈值处理方式相关的标志位。
+    */
+    CV_THRESH_MASK        =7,
+
+    /** 
+    描述：使用 OTSU 方法自动确定阈值。这个方法在图像中自动找到最佳阈值来分割前景和背景。   
+    效果：自动选择阈值进行二值化处理。 
+    */
+    CV_THRESH_OTSU        =8, /**< use Otsu algorithm to choose the optimal threshold value;
+    
+    /** 
+    描述：使用 TRIANGLE 方法自动确定阈值。这个方法也是一种自动阈值选择算法，基于直方图。  
+    效果：自动选择阈值进行二值化处理。
+    */                             combine the flag with one of the above CV_THRESH_* values */
+    CV_THRESH_TRIANGLE    =16  /**< use Triangle algorithm to choose the optimal threshold value;
+                                 combine the flag with one of the above CV_THRESH_* values, but not
+                                 with CV_THRESH_OTSU */
+};
+```
 
 ### Otsu算法
 
