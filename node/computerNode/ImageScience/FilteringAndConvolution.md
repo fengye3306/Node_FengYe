@@ -162,7 +162,7 @@ enum
 这是一个行内公式：\( a^2 + b^2 = c^2 \)。
 
 $$
-E = mc^2
+\overbrace{a+b+c}^{\text{note}}
 $$
 
 ### 自适应阈值
