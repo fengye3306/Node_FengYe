@@ -1,10 +1,9 @@
 
-<!-- {docsify-ignore-all} -->  
 
-```Link
-# docsify文档地址
-https://docsify.js.org/#/zh-cn/helpers
-```
+
+
+* **作者：**李泓科
+* **邮箱：**lihongkje@outlook.com
 
 
 
