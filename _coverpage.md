@@ -11,6 +11,5 @@
 
 [Get Started](/DME.md)
 
-<!-- 背景图 -->
-![](public/img/dtla.png)
-
+<!-- 背景图片 -->
+![](_public/img/background.jpg)
