@@ -88,7 +88,7 @@ double cv::threshold(
     double thresh,          // 阈值
     double maxval,          // 阈值
     int type                // 阈值化卷积核接口调用枚举标志
-    )
+)
 ```
 
 > OpenCV阈值化卷积核接口调用枚举标志 参数标识
@@ -101,31 +101,37 @@ enum
     描述：将图像中的像素值与阈值进行比较，如果像素值大于阈值，则设置为 maxval，否则设置为 0。   
     效果：得到一个二值图像。 
     */
-    CV_THRESH_BINARY      =0,  /**< value = value > threshold ? max_value : 0       */
+    CV_THRESH_BINARY      =0,  
+        /**< value = value > threshold ? max_value : 0       */
+
 
     /** 
     描述：与 THRESH_BINARY 相反。如果像素值大于阈值，则设置为 0，否则设置为 maxval。     
     效果：得到一个反转的二值图像。
     */
-    CV_THRESH_BINARY_INV  =1,  /**< value = value > threshold ? 0 : max_value       */
+    CV_THRESH_BINARY_INV  =1,  
+        /**< value = value > threshold ? 0 : max_value       */
 
     /** 
     描述：将像素值与阈值进行比较。如果像素值大于阈值，则将其截断为阈值（即设置为阈值），否则不变。      
     效果：像素值高于阈值的部分被截断到阈值。  
     */
-    CV_THRESH_TRUNC       =2,  /**< value = value > threshold ? threshold : value   */
+    CV_THRESH_TRUNC       =2,  
+        /**< value = value > threshold ? threshold : value   */
 
     /** 
     描述：如果像素值大于阈值，则保持原值；否则将其设置为 0。      
     效果：像素值低于阈值的部分被置为 0，其他部分保持不变。  
     */
-    CV_THRESH_TOZERO      =3,  /**< value = value > threshold ? value : 0           */
+    CV_THRESH_TOZERO      =3,  
+        /**< value = value > threshold ? value : 0           */
 
     /** 
     描述：与 THRESH_TOZERO 相反。如果像素值大于阈值，则保持原值；否则将其设置为 maxval。     
     效果：像素值低于阈值的部分被设置为 maxval，其他部分保持不变。
     */
-    CV_THRESH_TOZERO_INV  =4,  /**< value = value > threshold ? 0 : value           */
+    CV_THRESH_TOZERO_INV  =4,  
+        /**< value = value > threshold ? 0 : value           */
 
     /** 
     描述：掩码  
@@ -141,25 +147,29 @@ enum
     描述：使用 OTSU 方法自动确定阈值。这个方法在图像中自动找到最佳阈值来分割前景和背景。   
     效果：自动选择阈值进行二值化处理。 
     */
-    CV_THRESH_OTSU        =8, /**< use Otsu algorithm to choose the optimal threshold value;
+    CV_THRESH_OTSU        =8, 
+        /**< use Otsu algorithm to choose the optimal threshold value;
                                combine the flag with one of the above CV_THRESH_* values */
     /** 
     描述：使用 TRIANGLE 方法自动确定阈值。这个方法也是一种自动阈值选择算法，基于直方图。  
     效果：自动选择阈值进行二值化处理。
     */                            
-    CV_THRESH_TRIANGLE    =16  /**< use Triangle algorithm to 
-                                    choose the optimal threshold value;
-                                    combine the flag with one of the above 
-                                    CV_THRESH_* values, but not
-                                     with CV_THRESH_OTSU */
+    CV_THRESH_TRIANGLE    =16  
+        /**< use Triangle algorithm to choose the optimal threshold value;
+                 combine the flag with one of the above  CV_THRESH_* values, but not
+                 with CV_THRESH_OTSU */
 };
 ```
 
 ### Otsu算法
 
-*Otsu命名来自一位日本学者，大津展之（Nobuyuki Otsu）,其用于自动将灰度图像转化为二值图像*   
+*Otsu命名来自一位日本学者，大津展之（Nobuyuki Otsu）,Otsu用于自动将灰度图像转化为二值图像*   
 
-这是一个行内公式：\( a^2 + b^2 = c^2 \)。
+> 逻辑简述
+
+Otsu如何将一张灰度图转换为
+
+> 数学分析
 
 $$
 \overbrace{a+b+c}^{\text{note}}
