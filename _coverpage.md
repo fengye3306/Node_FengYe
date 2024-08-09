@@ -1,7 +1,7 @@
 <!-- _coverpage.md -->
 
 <!-- 背景图片 -->
-![](_public/img/background.jpg)
+![](./public/img/background.jpg)
 <!-- 图标 -->
 ![logo](./public/img/gouhuo.gif)
 
