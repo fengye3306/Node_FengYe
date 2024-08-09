@@ -2,7 +2,8 @@
 
 ## Cmake 基础语法
 
-### 构建
+### 构建  
+
 > 构建动态链接库
 
 ```cmake
@@ -12,14 +13,45 @@
     )
 ```
 
-### 文件
+### RPATH  
+
+> 失效的 REPATH
+
+我遇到了一个比较奇怪的事情，`add_subdirectory( ./test )`中，对`set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)`的设置并未对这个可执行文件工程生效。   
+无论我如何设置路径，甚至用上了绝对路径`libopencv_core.so.408`都不能正常的在INSTALL版本中被强制链接。但是在`BUILD`版本的中,它是生效 。   
+直到我将set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)设置放到了顶层目录中，终于，执行生效！！！
+
+问题原因需要进一步测试
+
+```cmake
+cmake_minimum_required( VERSION 3.10 )
+project( Task_01_First CXX ) 
+
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+add_subdirectory( ./Common )    # 工程接口 
+add_subdirectory( ./plugin )    # 插件 
+add_subdirectory( ./test )      # 主工程 
+```
 
 
 
-### 
+## 模块
+
+### VSCode_CmakeTool
+
+> settings.json 增加编译选择
+
+```cpp
+"cmake.configureArgs": [
+    "-DUSE_QT6=off",
+    "-DBUILD_TESTING=on",
+    "-DBUILD_EXAMPLES=on",
+    "-DCMAKE_PREFIX_PATH=/home/hongkeli/lib/qt/5.15.2/gcc_64;/home/hongkeli/lib/OpenCV/install/lib/cmake/opencv4;/home/hongkeli/lib/googletest/install/lib/cmake/GTest"
+]
+```
 
 
-## Cmake 模块新知
 ### include作用域互不干扰策略
 
 ```CC
@@ -91,9 +123,6 @@ else()
 	)
 endif()
 ```
-### Vscode cmake工具配置
-
-
 
 
 

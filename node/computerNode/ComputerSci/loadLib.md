@@ -5,6 +5,7 @@
 
 > 查询接口是否正常导出
 
+
 ` nm -D ${库名} | grep  ${接口名} `
 
 ```sh
@@ -20,7 +21,6 @@ add_definitions(-Dalgined_LIBRARY)
 ```
 
 ```cpp
-
 // 导出宏
 #if defined(algined_LIBRARY)
 #  if defined(_WIN32)

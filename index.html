@@ -15,9 +15,18 @@
   <link rel="stylesheet" href="static/docsify/themes/dark.css" title="dark" disabled>
   <link rel="stylesheet" href="static/docsify/themes/theme-simple.css" title="theme-simple" disabled>
   <link rel="stylesheet" href="static/docsify/themes/theme-defaults.css" title="theme-defaults" disabled>
- 
-  <!-- 支持LaTeX排版数学公式 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify-latex@0"></script>
+
+  <!-- 引入 KaTeX 的 JavaScript 和 CSS  支持LaTeX排版数学公式-->
+  <script src="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
+  <!-- 引入 marked.js -->
+  <script src="//cdn.jsdelivr.net/npm/marked@4"></script>
+  <!-- 引入 docsify-katex 的 JavaScript -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-katex@latest/dist/docsify-katex.js"></script>
+  <!-- 或者使用 GitHub 的链接 -->
+  <!-- <script src="//cdn.jsdelivr.net/gh/upupming/docsify-katex@latest/dist/docsify-katex.js"></script> -->
+
+  
   <!-- 复制到剪贴板
    在所有的代码块上添加一个简单的Click to copy按钮来允许用户从你的文档中轻易地复制代码。由@jperasmus提供。
    -->
