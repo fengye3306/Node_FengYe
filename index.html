@@ -19,19 +19,19 @@
   <div id="app"></div>
   <script>
     window.$docsify = {
-      name: 'docsify-latex',
-      repo: 'scruel/docsify-latex',
-      homepage: 'index.md',
-      loadSidebar: true,
-
-      autoHeader: true,
-      subMaxLevel: 3,
-
-      auto2top: true,
+      name         : '枫叶笔记',
+      repo         : '',
+      homepage     : 'DME.md',   // 入口文件改为 /home.md 原为README.md
+      loadSidebar  : true,       //开启全局侧边栏
+      onlyCover    : true,       //分离首页和详情页
+      autoHeader   : true,
+      subMaxLevel  : 3,          //侧边栏开启目录 - 数字似乎是目录深度 最高接受几级
+      relativePath : true,       //对于文件查找启用相对路径
+      auto2top     : true,
       executeScript: true,
-      mergeNavbar: true,
-
-      themeable: {
+      mergeNavbar  : true,
+      topMargin    : 90,         //你的内容页在滚动到指定的锚点时，距离页面顶部有一定空间
+      themeable:{
         responsiveTables: false
       },
       search: {
