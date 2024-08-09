@@ -42,15 +42,12 @@
       text-decoration: underline;
     }
 
-    /* 调整侧边栏的宽度 */
     .sidebar {
-      width: 300px; /* 根据需要调整宽度 */
+      display: flex;
+      flex-direction: column;
+      width: auto;     /* 自动适应内容宽度 */
+      max-width: 40%;  /* 设置最大宽度，避免过宽 */
     }
-    /* 调整文档内容的位置，避免内容被侧边栏覆盖 */
-    .content {
-      margin-left: 320px; /* 根据侧边栏的宽度调整 */
-    }
-    
     * {
       font-family: "KaiTi";
     }
