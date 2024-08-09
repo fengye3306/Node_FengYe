@@ -131,7 +131,8 @@ enum
     描述：掩码  
     效果：其实你不用关注这个枚举值，这是OpenCV在源码中用于分割枚举阈值的 掩码位
         在源码中OpenCV通过 type &= THRESH_MASK;  相当于 0000 1111 & 0000 0111 = 0000 0111
-        用于筛选和提取阈值处理方式的标志位。由于阈值处理方式的标志位在 type 的低三位中，所以掩码只需要保留这三位的信息。
+        用于筛选和提取阈值处理方式的标志位。由于阈值处理方式的标志位在 type 的低三位中，
+        所以掩码只需要保留这三位的信息。
         其他的位（如自动阈值计算方法的标志位）会被清除，从而只保留与阈值处理方式相关的标志位。
     */
     CV_THRESH_MASK        =7,
@@ -141,14 +142,16 @@ enum
     效果：自动选择阈值进行二值化处理。 
     */
     CV_THRESH_OTSU        =8, /**< use Otsu algorithm to choose the optimal threshold value;
-    
+                               combine the flag with one of the above CV_THRESH_* values */
     /** 
     描述：使用 TRIANGLE 方法自动确定阈值。这个方法也是一种自动阈值选择算法，基于直方图。  
     效果：自动选择阈值进行二值化处理。
-    */                             combine the flag with one of the above CV_THRESH_* values */
-    CV_THRESH_TRIANGLE    =16  /**< use Triangle algorithm to choose the optimal threshold value;
-                                 combine the flag with one of the above CV_THRESH_* values, but not
-                                 with CV_THRESH_OTSU */
+    */                            
+    CV_THRESH_TRIANGLE    =16  /**< use Triangle algorithm to 
+                                    choose the optimal threshold value;
+                                    combine the flag with one of the above 
+                                    CV_THRESH_* values, but not
+                                     with CV_THRESH_OTSU */
 };
 ```
 
