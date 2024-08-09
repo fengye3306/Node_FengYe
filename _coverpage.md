@@ -1,5 +1,8 @@
 <!-- _coverpage.md -->
 
+<!-- 背景图片 -->
+![](_public/img/background.jpg)
+<!-- 图标 -->
 ![logo](./public/img/gouhuo.gif)
 
 # 枫叶子的笔记
@@ -11,5 +14,3 @@
 
 [Get Started](/DME.md)
 
-<!-- 背景图片 -->
-![](_public/img/background.jpg)
