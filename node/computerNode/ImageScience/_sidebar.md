@@ -2,7 +2,7 @@
 
 
 
-* **图像处理**  
+* **图像像素联系分析篇**  
 * [滤波与卷积](./FilteringAndConvolution.md) 
 * [图像变换](./ImageTransformations.md)
 * [图像分析](./ImageAnalysis.md)
