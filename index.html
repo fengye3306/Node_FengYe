@@ -17,11 +17,53 @@
 </head>
 <body>
   <div id="app"></div>
+
+
+  <style>
+    /*列宽度自适应不换行*/
+    table td {
+      width: 10%;
+      white-space: nowrap;
+    }
+
+    /*斑马线 */
+    table tr:nth-of-type(2n) {
+      background-color: rgb(246, 249, 252);
+    }
+
+    table td:nth-of-type(2n) {
+      color: rgb(34, 151, 214);
+    }
+
+    #myTitle {
+      text-align: center;
+    }
+
+    :root { 
+      --base-font-size: 13px;
+    }
+
+    /*a标签下划线去掉*/
+    a {
+      text-decoration: none;
+    }
+
+    /*指向a标签时 标签变色*/
+    a:hover {
+      text-decoration: underline;
+    }
+    /*字体全局设置为楷体*/
+    * {
+      font-family: "KaiTi";
+    }
+
+  </style>
+
   <script>
     window.$docsify = {
       name         : '枫叶笔记',
       repo         : '',
-      homepage     : 'DME.md',   // 入口文件改为 /home.md 原为README.md
+      homepage     : 'DME.md',   //入口文件改为 /DME.md 原为README.md
       loadSidebar  : true,       //开启全局侧边栏
       onlyCover    : true,       //分离首页和详情页
       autoHeader   : true,
