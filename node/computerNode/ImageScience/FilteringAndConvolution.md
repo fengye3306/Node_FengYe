@@ -171,7 +171,7 @@ enum
 Otsu 算法的本质是通过找到一个阈值，使得图像被分为前景和背景两部分后，这两部分的**差异最大**，即“前景和背景的区分度”最高。
 **差异最大**的本质是选择一个合适的阈值来最大化前景和背景之间的*类间方差*。   
 
-[类间方差数学解析](/math/Statistics/Between_Class_Variance.md)
+[类间方差数学解析](/math/node/Statistics/Between_Class_Variance.md)
 
 
 
