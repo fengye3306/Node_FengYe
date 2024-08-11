@@ -263,9 +263,9 @@ enum
 > OpenCV，指定边缘像素平滑方式（borderType）
 
 OpenCV对于不同平滑算法有不同的函数接口实现，接口中src，dst分别代表源图像与目标图像，其后是不同的平滑操作所需要的参数。   
-其中相同的参数borderType它是指定**边缘像素的平滑方式**，其是共有参数。   
+其中，共有参数borderType,它用于指定**对于边缘像素的平滑方式**。   
 
-![平滑方式](./image/FilteringAndConvolution/02.png ':size=WIDTHxHEIGHT')
+![边缘像素平滑方式](./image/FilteringAndConvolution/02.png ':size=WIDTHxHEIGHT')
 
 /** OpenCV 平滑方式（borderType） */
 enum
@@ -333,8 +333,6 @@ enum
     BORDER_ISOLATED = 16
         /**< value = do not look outside of ROI */
 };
-
-
 
 ### 简单模糊和方框型滤波器
 
