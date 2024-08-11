@@ -267,6 +267,8 @@ OpenCV对于不同平滑算法有不同的函数接口实现，接口中src，ds
 
 ![边缘像素平滑方式](./image/FilteringAndConvolution/02.png ':size=WIDTHxHEIGHT')
 
+```OpenCV
+
 /** OpenCV 平滑方式（borderType） */
 enum
 {
@@ -333,6 +335,9 @@ enum
     BORDER_ISOLATED = 16
         /**< value = do not look outside of ROI */
 };
+```
+
+
 
 ### 简单模糊和方框型滤波器
 
