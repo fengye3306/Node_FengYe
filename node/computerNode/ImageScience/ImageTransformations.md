@@ -331,19 +331,26 @@ cv::imwrite("rotated.jpg", dst);
 
 > 透视变换数学模型
 
+透视变换在数学上是一种 射影变换 (Projective Transformation)，射影变换属于 数学中的射影几何（Projective Geometry）学科。    
+射影几何 是几何学的一个分支，研究的是几何图形在射影变换下的性质。 
+
 @@
 \begin{bmatrix}
 x' \\
 y' \\
 1
 \end{bmatrix}
-@@
-
-@@
+=
 \begin{bmatrix}
 a_{11} & a_{12} & a_{13} \\
 a_{21} & a_{22} & a_{23} \\
 a_{31} & a_{32} & 1
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+x \\
+y \\
+1
 \end{bmatrix}
 @@
 
@@ -379,8 +386,6 @@ cv::warpPerspective(srcImage, dstImage, perspectiveMatrix, cv::Size(width, heigh
 cv::Mat inverseMatrix;
 cv::invert(perspectiveMatrix, inverseMatrix, cv::DECOMP_LU);
 ```
-
-
 
 ## **通用变换**
 
