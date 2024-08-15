@@ -1200,13 +1200,155 @@ I_{\text{black-hat}} =
 
 ### 自定义核
 
-## **用任意线性滤波器做卷积**
+自定义核（Custom Kernel是指我们可以设计并应用自己定义的卷积核，用于图像处理任务。  
+自定义核允许我们根据需求设计特定的图像处理操作，如模糊、锐化、边缘检测等。
 
-### 用cv::filter2D进行卷积
+### cv::filter2D自定义
 
-### 通过cv::sepFilter2D使用可分核
+`cv::filter2D` 是 OpenCV 提供的一个函数，用于进行二维卷积操作。  
+它可以应用任何自定义的卷积核来处理图像。以下是如何使用 cv::filter2D 自定义卷积核的步骤：
+
+1. 定义卷积核：设计你需要的卷积核，通常为一个二维矩阵。
+2. 应用卷积核：使用 cv::filter2D 函数将卷积核应用到图像上。
+
+```cpp
+#include <opencv2/opencv.hpp>
+
+int main() {
+    cv::Mat src = 
+        cv::imread("input.jpg", cv::IMREAD_COLOR); // 读取图像
+    cv::Mat dst;
+
+    // 1.自定义锐化卷积核
+    cv::Mat kernel = (cv::Mat_<float>(3, 3) <<
+        0, -1, 0,
+        -1, 5, -1,
+        0, -1, 0);
+
+    // 2.使用filter2D进行卷积
+    cv::filter2D(
+        src,               // 输入图像
+        dst,               // 输出图像
+        -1,                // 图像深度，设置为-1表示输出图像的深度与输入图像相同。
+        kernel,            // 卷积核，类型为cv::Mat
+        /*锚点位置，
+        如果设置为(-1, -1)表示使用自动寻找卷积核的中心，而不用自己去算*/
+        cv::Point(-1, -1), 
+        // 缩放因子，用于调整卷积结果的强度。设置为0表示不进行缩放，直接使用卷积结果。
+        0,                 
+        // 边界处理方式，表示如何处理图像边界。
+        cv::BORDER_DEFAULT 
+    );
+
+    cv::imwrite("sharpened.jpg", dst); // 保存结果
+    return 0;
+}
+
+```
+
+### 通过cv::sepFilter2D使用可分核   
+
+可分核（Separable Kernel） 是一种特殊类型的卷积核，可以分解为两个一维卷积核的乘积。  
+使用可分核可以提高卷积计算的效率，因为它减少了计算量。    
+
+**为什么？**   
+
+可分离卷积（Separable Convolution）通过将一个大的卷积核分解成几个较小的卷积核，从而提高计算效率。具体来说，这种方法可以显著减少计算量，使得处理速度更快。  
+
+> 可分离卷积的基本原理  
+
+
+1. 分解卷积核   
+
+可分离卷积是将一个大的二维卷积核分解成两个一维卷积核的过程。例如，一个 @5 \times 5@ 的卷积核可以分解为一个 @5 \times 1@ 的垂直卷积核和一个 @1 \times 5@ 的水平卷积核。
+
+例子：  
+
+假设我们有一个 @3 \times 3@ 的卷积核：
+@@
+K =
+\begin{bmatrix}
+1 & 2 & 1 \
+0 & 0 & 0 \
+-1 & -2 & -1
+\end{bmatrix}
+@@
+
+这个卷积核可以分解成两个一维卷积核：  
+
+@@
+K_{vertical} =
+\begin{bmatrix}
+1 \
+0 \
+-1
+\end{bmatrix}
+@@
+和
+@@
+K_{horizontal} =
+\begin{bmatrix}
+1 & 2 & 1
+\end{bmatrix}
+@@
+
+2. 计算效率的提高  
+
+分解过程减少了每次卷积操作中涉及的乘法和加法的数量。对于一个 @M \times N@ 的图像和一个 @m \times m@ 的卷积核，直接计算的复杂度为 @O(M \times N \times m^2)@。然而，通过可分离卷积，计算复杂度减少为：   
+
+一次水平卷积（@M \times N \times m@），
+一次垂直卷积（@M \times N \times m@），
+总复杂度为 @O(2 \times M \times N \times m)@，大大减少了计算量。  
+
+
+3. 示例计算   
+
+假设我们要对一个 @5 \times 5@ 的图像使用一个 @5 \times 5@ 的卷积核。
+
+直接卷积：需要计算 @5 \times 5 \times 5 \times 5 = 625@ 次操作（乘法和加法）。  
+
+可分离卷积：  
+先用 @5 \times 1@ 的卷积核处理图像，计算复杂度为 @5 \times (5 \times 5) = 125@ 次操作。
+然后用 @1 \times 5@ 的卷积核处理结果，计算复杂度为 @5 \times (5 \times 5) = 125@ 次操作。
+总复杂度为 @125 + 125 = 250@ 次操作。   
+
+
+> 使用 cv::sepFilter2D 实现高斯模糊核
+
+```cpp
+
+/**
+kernelX 和 kernelY 是分别用于 x 和 y 方向的高斯核。
+cv::sepFilter2D 函数将这些一维核应用于图像，以实现高斯模糊效果。
+*/
+
+#include <opencv2/opencv.hpp>
+
+int main() {
+    cv::Mat src = cv::imread("input.jpg", cv::IMREAD_COLOR); // 读取图像
+    cv::Mat dst;
+
+    // 定义一维高斯核
+    cv::Mat kernelX = (cv::Mat_<float>(1, 5) <<
+        1, 4, 6, 4, 1); // 示例高斯核的x方向
+    cv::Mat kernelY = (cv::Mat_<float>(5, 1) <<
+        1, 4, 6, 4, 1); // 示例高斯核的y方向
+
+    // 对一维核进行归一化处理
+    kernelX /= cv::sum(kernelX)[0];
+    kernelY /= cv::sum(kernelY)[0];
+
+    // 使用sepFilter2D进行卷积
+    cv::sepFilter2D(src, dst, -1, kernelX, kernelY, cv::Point(-1, -1), 0, cv::BORDER_DEFAULT);
+
+    cv::imwrite("blurred.jpg", dst); // 保存结果
+    return 0;
+}
+```
+
+
+
 
 ### 生成卷积核
 
-## **总结**
 
