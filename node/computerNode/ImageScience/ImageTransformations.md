@@ -8,7 +8,9 @@
 这个过程通常用于改变图像的大小（放大或缩小），并且保持原始图像的长宽比例。  
 在计算机视觉领域，均匀调整广泛应用于图像处理和预处理，如在训练深度学习模型时调整输入图像的尺寸。  
 
-在OpenCV中，cv::resize() 函数是实现均匀调整的主要工具。它支持多种插值方式，适用于不同的缩放需求。    
+在OpenCV中，cv::resize() 函数是实现均匀调整的主要工具。它支持多种插值方式，适用于不同的缩放需求。     
+
+```OpenCV
 /** OpenCV 插值方式（Interpolation Methods） */
 enum
 {
@@ -47,7 +49,7 @@ enum
     INTER_LANCZOS4 = 4,
         /**< value = Lanczos interpolation over 8x8 neighborhood */
 };
-
+```  
 
 ### 图像金字塔    
 
@@ -140,8 +142,8 @@ laplacian_pyramid = src - laplacian_pyramid;  // 计算细节信息
 仿射变换（Affine Transformation） 是一种保持点、直线之间关系不变的线性变换，包括平移、旋转、缩放、剪切和翻转等操作。  
 仿射变换可以用一个线性变换矩阵和一个位移向量来描述，其本质是线性代数中的矩阵运算，通过左乘一个矩阵来实现坐标系转换。   
 
+> 数学推导 
 
-> 数学推导
 仿射变换将原始坐标点 @\mathbf{P}(x, y)@ 转换为新坐标点 @\mathbf{P'}(x', y')@，其数学表达式为：
 
 @@
