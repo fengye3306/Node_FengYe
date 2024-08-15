@@ -309,6 +309,78 @@ cv::imwrite("rotated.jpg", dst);
 
 ### 透视变换
 
+透视变换是一种几何变换，它可以将图像从一个平面转换到另一个平面，改变图像的形状和比例，使得看起来像是从另一个角度观察的。  
+透视变换就像你把一张纸从一个角度拉伸、旋转或翻转，看上去这张纸的形状变了，但它其实还是原来的那张纸，只是你看它的角度不同了。    
+
+透视变换并不是一种线性变换，其允许图像中的直线保持直线，但平行线不再保持平行。这使得图像看起来有深度或距离感，类似于在现实生活中透视的效果。    
+
+**拍摄修复**   
+你用手机拍摄文档或书籍页面时，图片可能会有一定的角度倾斜，导致文档的四边不是矩形，而是一个梯形，通过透视变换，可以将这个梯形校正为一个标准的矩形，使得文档看起来像是从正上方拍摄的，便于阅读和进一步处理。  
+
+**图像拼接与全景图**    
+在生成全景图像时，需要将多张图像拼接在一起。这些图像通常是从不同角度拍摄的，因此需要对齐。  
+通过透视变换，可以将不同角度拍摄的图像变换到同一个平面上，使它们能够无缝拼接。   
+
+将图片由一个观察视角纠正到另一个观察视角就是透视变换的本质，如上都是将透视进行正变换。     
+**图像中的虚拟广告植入**  
+在体育赛事直播中，有时需要将广告植入到比赛场地的特定区域，比如足球场或篮球场的地面上。  
+通过透视变换，可以将二维的广告图像变换为与地面视角一致的图像，使得广告看起来像是实际存在于场地上。  
+
+
+![透视变换](./image/ImageTransformations/01.png ':size=WIDTHxHEIGHT')
+
+> 透视变换数学模型
+
+@@
+\begin{bmatrix}
+x' \\
+y' \\
+1
+\end{bmatrix}
+@@
+
+@@
+\begin{bmatrix}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & 1
+\end{bmatrix}
+@@
+
+> OpenCV透视变换  
+
+1. `cv::getPerspectiveTransform`——计算透视变换矩阵  
+
+这是一个将4个点的对应关系转化为3x3透视矩阵的函数。输入为原图像中的4个点和目标图像中的4个点，输出为透视变换矩阵。
+
+```cpp
+
+cv::Point2f srcPoints[4] = { ... }; // 原图像的四个点
+cv::Point2f dstPoints[4] = { ... }; // 目标图像的四个点
+cv::Mat perspectiveMatrix = cv::getPerspectiveTransform(srcPoints, dstPoints);
+
+```
+
+2. `cv::warpPerspective`——将图像进行透视变换。  
+
+这是实际执行透视变换的函数，使用由 cv::getPerspectiveTransform 计算的矩阵。
+
+```cpp
+cv::Mat srcImage = cv::imread("image.jpg"); // 原图像
+cv::Mat dstImage;
+cv::warpPerspective(srcImage, dstImage, perspectiveMatrix, cv::Size(width, height));
+```
+
+3. `cv::invertPerspectiveTransform`——计算透视变换的逆矩阵。  
+
+这在需要将变换后的图像点映射回原图像时很有用。
+
+```cpp
+cv::Mat inverseMatrix;
+cv::invert(perspectiveMatrix, inverseMatrix, cv::DECOMP_LU);
+```
+
+
 
 ## **通用变换**
 
