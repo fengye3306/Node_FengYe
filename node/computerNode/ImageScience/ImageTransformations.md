@@ -135,10 +135,50 @@ cv::pyrUp(gaussian_pyramid, laplacian_pyramid);
 laplacian_pyramid = src - laplacian_pyramid;  // 计算细节信息
 ```
 
-
-### 不均匀映射
 ### 仿射变换
+
+仿射变换（Affine Transformation） 是一种保持点、直线之间关系不变的线性变换，包括平移、旋转、缩放、剪切和翻转等操作。  
+仿射变换可以用一个线性变换矩阵和一个位移向量来描述，其本质是线性代数中的矩阵运算，通过左乘一个矩阵来实现坐标系转换。   
+
+
+> 数学推导
+仿射变换将原始坐标点 @\mathbf{P}(x, y)@ 转换为新坐标点 @\mathbf{P'}(x', y')@，其数学表达式为：
+
+@@
+\mathbf{P'} = \mathbf{A} \cdot \mathbf{P} + \mathbf{B}
+@@
+
+其中，@ \mathbf{A} @ 是一个 2x2 的线性变换矩阵，@ \mathbf{B} @ 是一个平移向量，@ \mathbf{P} @ 和 @ \mathbf{P'} @ 是齐次坐标表示的二维向量。
+
+齐次坐标表示：
+@@
+\mathbf{P} = \begin{bmatrix} x \ y \ 1 \end{bmatrix}
+\quad
+\mathbf{P'} = \begin{bmatrix} x' \ y' \ 1 \end{bmatrix}
+@@
+
+矩阵 @ \mathbf{A} @ 的形式为：
+@@
+\mathbf{A} = \begin{bmatrix} a_{11} & a_{12} \ a_{21} & a_{22} \end{bmatrix}
+@@
+
+平移向量 @ \mathbf{B} @ 的形式为：
+@@
+\mathbf{B} = \begin{bmatrix} b_1 \ b_2 \end{bmatrix}
+@@
+
+因此，仿射变换的完整表达式为：
+@@
+\begin{bmatrix} x' \ y' \ 1 \end{bmatrix} = \begin{bmatrix} a_{11} & a_{12} & b_1 \ a_{21} & a_{22} & b_2 \ 0 & 0 & 1 \end{bmatrix} \cdot \begin{bmatrix} x \ y \ 1 \end{bmatrix}
+@@
+
+这意味着新坐标 @\mathbf{P'}@ 是通过对原坐标 @\mathbf{P}@ 进行矩阵 @\mathbf{A}@ 的线性变换后，再加上一个平移 @\mathbf{B}@ 所得到的。
+
+
+
+
 ### 透视变换
+
 
 ## **通用变换**
 
