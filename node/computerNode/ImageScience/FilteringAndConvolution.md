@@ -1280,8 +1280,8 @@ K =
 @@
 K_{vertical} =
 \begin{bmatrix}
-1 \
-0 \
+1 \\
+0 \\
 -1
 \end{bmatrix}
 @@  
