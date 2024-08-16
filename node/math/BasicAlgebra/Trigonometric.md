@@ -53,3 +53,14 @@
      @@
    
    - **Geometry Definition**：@\csc \theta@ 是 @\sin \theta@ 的倒数。
+
+## 和差公式 
+
+![和差公式几何推导](./img/Trigonometric/01.png ':size=WIDTHxHEIGHT')
+
+## 二倍角公式
+
+![二倍角公式推导](./img/Trigonometric/02.png ':size=WIDTHxHEIGHT')
+
+
+
