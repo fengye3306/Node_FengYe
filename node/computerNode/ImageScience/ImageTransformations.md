@@ -494,13 +494,36 @@ AI 方法可以学习图像的高级特征和结构，因此在修复较复杂�
 cv::inpaint 是 OpenCV 提供的一个函数，用于图像修复（去除图像中的瑕疵）。它通过利用图像的周围像素信息来填补缺失或损坏的区域，从而使图像看起来更完整。以下是 cv::inpaint 接口的详细说明及调用实例： 
 
 ```cpp
-void cv::inpaint(
-    InputArray src, 
-    InputArray inpaintMask, 
-    OutputArray dst, 
-    double inpaintRadius, 
-    int flags
-);
+// void cv::inpaint(
+//     InputArray src, 
+//     InputArray inpaintMask, 
+//     OutputArray dst, 
+//     double inpaintRadius, 
+//     int flags
+// );
 
+#include <opencv2/opencv.hpp>
+
+int main() {
+    // 读取图像
+    cv::Mat src = cv::imread("image.jpg");
+    
+    // 创建掩模图像
+    cv::Mat inpaintMask = cv::Mat::zeros(src.size(), CV_8UC1);
+    
+    // 设定掩模区域 (例如，圆形区域)
+    cv::circle(inpaintMask, cv::Point(100, 100), 20, cv::Scalar(255), -1);
+    
+    // 创建输出图像
+    cv::Mat dst;
+    
+    // 调用 inpaint 函数进行图像修复
+    cv::inpaint(src, inpaintMask, dst, 3, cv::INPAINT_TELEA);
+    
+    // 保存修复后的图像
+    cv::imwrite("repaired_image.jpg", dst);
+    
+    return 0;
+}
 ```
 
