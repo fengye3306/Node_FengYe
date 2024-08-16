@@ -468,9 +468,47 @@ cv::imwrite("cartesian.jpg", dst);
 
 ## **图像修复**
 
+图像因为噪声而破损，镜头上可能存在灰尘或是水渍，或者图像的一部分被损坏。  
+
+如下，对因为文字覆盖而损坏的图像。   
+![图像修复](./image/ImageTransformations/01.png ':size=WIDTHxHEIGHT')
+
+
 ### 图像修复
 
+> 当前图像修复技术：  
+
+* 传统方法：
+
+使用算法如 cv::inpaint 来填补图像中的缺失区域。  
+传统方法适用于简单的修复任务，但在处理复杂的纹理和结构时可能效果不佳。  
+
+* AI 和深度学习方法： 
+
+基于深度学习的修复技术（如卷积神经网络）可以更好地处理复杂的图像修复任务。
+AI 方法可以学习图像的高级特征和结构，因此在修复较复杂的图像细节时通常表现更好。
+
+
+> OpenCV图像修复
+
+cv::inpaint 是 OpenCV 提供的一个函数，用于图像修复（去除图像中的瑕疵）。它通过利用图像的周围像素信息来填补缺失或损坏的区域，从而使图像看起来更完整。以下是 cv::inpaint 接口的详细说明及调用实例： 
+
+```cpp
+void cv::inpaint(
+    InputArray src, 
+    InputArray inpaintMask, 
+    OutputArray dst, 
+    double inpaintRadius, 
+    int flags
+);
+
+```
+
 ### 去噪
+
+图像修复领域我想不出任何理由不用AI来作！！！
+
+
 
 ## **直方图均衡化**
 
