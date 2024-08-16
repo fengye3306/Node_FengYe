@@ -388,16 +388,88 @@ cv::invert(perspectiveMatrix, inverseMatrix, cv::DECOMP_LU);
 
 ## **通用变换**
 
+### 极坐标映射  
+
+**极坐标系在某些情况下可以显著简化计算**
 
 
+极坐标系通过原点（极点）以及角度 @θ@ 和距离 @r@ 来表示点的位置。  
+与笛卡尔坐标系相比，极坐标系在处理旋转变换时具有显著优势，因为旋转变换只影响角度 @θ@，而半径 @r@ 不受影响。这使得在进行旋转变换时，极坐标系能够更加自然和高效地表示图像中的点。  
 
-### 极坐标映射
-### LogPolar
-### 任意映射
+在笛卡尔坐标系中，旋转变换会导致图像中的点位置发生变化，需要重新计算这些点的新坐标。  
+这通常涉及复杂的插值计算，因为旋转后的坐标点可能不会落在原始像素的整数位置上。因此，为了确定旋转后像素的值，必须使用插值技术，这增加了计算的复杂性和计算量。  
+
+### LogPolar极坐标系    
+
+“LogPolar” 是一种特殊的极坐标表示方式，但它并不完全等同于普通的极坐标系统。    
+
+* 普通极坐标系（Polar Coordinates）    
+表示方式：通过原点（极点）、一个角度 @θ@ 和一个半径 @r@ 来表示点的位置。  
+坐标：用 @ (r, θ) @ 表示，其中 @ r @ 是到原点的距离，@ θ @ 是与参考方向的夹角。  
+
+* 对数极坐标系（Log-Polar Coordinates）  
+表示方式：将极坐标系统中的半径 @r@ 使用对数变换来表示，即 @ \log(r) @。
+坐标：用 @ (\log(r), θ) @ 表示，其中 @ \log(r) @ 是半径 @r@ 的对数值，@ θ @ 仍然是与参考方向的夹角。    
+变换的好处：这个变换的好处是，它将原本以指数方式增长的半径 @r@ 转换为对数尺度，从而使得处理尺度变化（如图像缩放）更加方便，并且在计算上更为稳定。      
+
+
+```cpp
+/**
+void cv::logPolar(
+    InputArray src,     // 输入图像
+    OutputArray dst,    // 输出图像，类型为 cv::Mat，存储 LogPolar 坐标系下的图像
+    Point2f center,     // 图像中心点，在 LogPolar 坐标系中通常是图像的中心。
+    double M,           // 尺度因子，用于控制 LogPolar 图像的大小。
+    int flags = INTER_LINEAR + WARP_FILL_OUTLIERS //插值方式和填充标志
+);
+*/
+cv::Mat src = cv::imread("input.jpg", cv::IMREAD_GRAYSCALE);
+cv::Mat dst;
+cv::Point2f center(src.cols / 2, src.rows / 2);
+double scale = 40;  // 比例因子
+
+cv::logPolar(src, dst, center, scale, cv::INTER_LINEAR + cv::WARP_FILL_OUTLIERS);
+cv::imwrite("logpolar.jpg", dst);
+
+```
+
+1. Cartesian坐标系转换为LogPolar坐标系
+
+```cpp
+cv::Mat src = cv::imread("input.jpg", cv::IMREAD_GRAYSCALE);
+cv::Mat dst;
+cv::Point2f center(src.cols / 2, src.rows / 2);
+double scale = 40;  // 比例因子
+
+cv::logPolar(src, dst, center, scale, cv::INTER_LINEAR + cv::WARP_FILL_OUTLIERS);
+cv::imwrite("logpolar.jpg", dst);
+```
+2. LogPolar坐标系转换为Cartesian坐标系
+
+```cpp
+/**
+void cv::linearPolar(
+    InputArray src, 
+    OutputArray dst, 
+    Point2f center, 
+    double M, 
+    int flags = INTER_LINEAR + WARP_FILL_OUTLIERS
+);
+*/
+cv::Mat src = cv::imread("logpolar.jpg", cv::IMREAD_GRAYSCALE);
+cv::Mat dst;
+cv::Point2f center(src.cols / 2, src.rows / 2);
+double scale = 40;  // 比例因子
+
+cv::linearPolar(src, dst, center, scale, cv::INTER_LINEAR + cv::WARP_FILL_OUTLIERS);
+cv::imwrite("cartesian.jpg", dst);
+```
+
 
 ## **图像修复**
 
 ### 图像修复
+
 ### 去噪
 
 ## **直方图均衡化**
