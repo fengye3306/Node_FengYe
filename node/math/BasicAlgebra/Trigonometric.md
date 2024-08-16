@@ -1,44 +1,49 @@
-1. Sine (sin)  
-- **定义**：在直角三角形中，某个角 θ 的正弦是该角的对边长度与斜边长度的比值。  
-@@
-sin θ = 对边 / 斜边
-@@
-**单位圆定义**：在单位圆中，角 θ 对应的点的 y 坐标就是 sin θ。
+1. **Sine (sin)**  
 
-2. Cosine (cos)    
-**定义**：在直角三角形中，某个角 θ 的余弦是该角的邻边长度与斜边长度的比值。  
-@@
-cos θ = 邻边 / 斜边
-@@
+Algebra Definition：在直角三角形中，某个角 \theta 的正弦是该角的对边长度与斜边长度的比值。   
 
-**单位圆定义**：在单位圆中，角 θ 对应的点的 x 坐标就是 cos θ。
-
-3. Tangent (tan)  
-**定义**：在直角三角形中，某个角 θ 的正切是该角的对边长度与邻边长度的比值。  
 @@
-tan θ = 对边 / 邻边
+sin\ \theta = \frac{\text{对边}}{\text{斜边}}
+@@  
+
+Geometry Definitio：在单位圆中，角 \theta 对应的点的 y 坐标就是 sin \theta。  
+
+2. **Cosine (cos)**    
+Algebra Definition：在直角三角形中，某个角 \theta 的余弦是该角的邻边长度与斜边长度的比值。  
+
+@@
+cos\ \theta = \frac{\text{邻边}}{\text{斜边}} 
 @@
 
-**单位圆定义**：在单位圆中，tan θ 可以表示为 sin θ / cos θ。
+Geometry Definition：在单位圆中，角 \theta 对应的点的 x 坐标就是 cos \theta。
 
-4. Cotangent (cot)  
-**定义**：在直角三角形中，某个角 θ 的余切是该角的邻边长度与对边长度的比值。
-@@
-cot θ = 邻边 / 对边
-@@
-**单位圆定义**：在单位圆中，cot θ 可以表示为 cos θ / sin θ。
+3. **Tangent (tan)**  
+Algebra Definition：在直角三角形中，某个角 \theta 的正切是该角的对边长度与邻边长度的比值。 
 
-5. Secant (sec)  
-**定义**：在直角三角形中，某个角 θ 的正割是斜边长度与邻边长度的比值。
 @@
-sec θ = 斜边 / 邻边 = 1 / cos θ
-@@
-**单位圆定义**：sec θ 是 cos θ 的倒数。
-
-6. Cosecant (csc)  
-**定义**：在直角三角形中，某个角 θ 的余割是斜边长度与对边长度的比值。
-@@
-csc θ = 斜边 / 对边 = 1 / sin θ
+tan\ \theta =  \frac{\text{对边}}{\text{邻边}}  
 @@
 
-**单位圆定义**：csc θ 是 sin θ 的倒数。
+Geometry Definition：在单位圆中，tan \theta 可以表示为 sin \theta / cos \theta。
+
+4. **Cotangent (cot)**  
+Algebra Definition：在直角三角形中，某个角 \theta 的余切是该角的邻边长度与对边长度的比值。
+@@
+cot\ \theta = \frac{\text{邻边}}{\text{对边}}  
+@@
+Geometry Definition：在单位圆中，cot \theta 可以表示为 cos \theta / sin \theta。
+
+5. **Secant (sec)** 
+Algebra Definition：在直角三角形中，某个角 \theta 的正割是斜边长度与邻边长度的比值。
+@@
+sec\ \theta = \frac{\text{斜边}}{\text{邻边}}  = \frac{1}{cos\ \theta} 
+@@
+Geometry Definition：sec \theta 是 cos \theta 的倒数。
+
+6. **Cosecant (csc)**  
+Algebra Definition：在直角三角形中，某个角 \theta 的余割是斜边长度与对边长度的比值。
+@@
+csc\ \theta =  \frac{\text{斜边}}{\text{对边}}  =  \frac{1}{sin\ \theta}  
+@@
+
+Geometry Definition：csc \theta 是 sin \theta 的倒数。
