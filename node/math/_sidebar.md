@@ -1,6 +1,7 @@
 
 * **代数学**
     * [线性代数](./linearAlgebra/)
+    * [基础代数](./BasicAlgebra/)
 * **分析学**
     * [微积分](./Calculus/)  
 * **统计学**
