@@ -105,8 +105,6 @@ a_n = \frac{f^{(n)}(x_0)}{n!}
 f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n = f(x_0) + \frac{f' \quad (x_0)}{1!}(x - x_0) + \frac{f'' \quad (x_0)}{2!}(x - x_0)^2 + \frac{f''' \quad (x_0)}{3!}(x - x_0)^3 + \ldots + \frac{f^{(n)} \quad (x_0)}{n!} (x - x_0)^n + \ldots
 @@
 
-\frac{f' (x_0)}{1!}
-
 这就是泰勒公式的由来了。    
 
 
