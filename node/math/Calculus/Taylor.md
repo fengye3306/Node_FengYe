@@ -20,6 +20,14 @@
 \sin(1) = 1 - \frac{x^3}{3!} + \frac{x^5}{5!}  \approx 0.84167 
 @@
 
+随着展开次数不断增加，无穷级数对于@\sin(x)@的拟合不断贴合。   
+
+![一次展开](./img/Taylor/01.png ':size=WIDTHxHEIGHT')
+![三次展开](./img/Taylor/02.png ':size=WIDTHxHEIGHT')
+![九次展开](./img/Taylor/03.png ':size=WIDTHxHEIGHT')
+
+
+
 > 幂级数（Power Series）
 
 幂级数（Power Series）是一个无穷级数，其每一项都是变量的某个非负整数次幂的乘积。幂级数通常用于表示函数，特别是在函数分析和微积分中。它的数学定义如下：  
