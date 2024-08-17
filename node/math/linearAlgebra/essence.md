@@ -13,11 +13,11 @@
 
 如下是平面向量的加法
 
-![正确的向量加法](./img/essence1 ':size=WIDTHxHEIGHT')
+![正确的向量加法](./img/essence/essence1 ':size=WIDTHxHEIGHT')
 
 而在以往，我常常会疑惑————为什么向量的加法不可以是如下形式？    
 
-![为什么不能是如下形式？](./img/essence2 ':size=WIDTHxHEIGHT')
+![为什么不能是如下形式？](./img/essence/essence2 ':size=WIDTHxHEIGHT')
 
 借用物理的视角来看待向量。 **向量是朝着空间的某方向迈出一定距离。**  
 对如上向量v进行拆解，向x方向迈出1，向y方向迈出2，分量组合形成向量v。    
@@ -30,7 +30,7 @@
 
 再切换到计算机视角 ———— 向量是有序列表。而向量加法就是有序列表的对应项相加。  
 
-![为什么不能是如下形式？](./img/essence3 ':size=WIDTHxHEIGHT')
+![为什么不能是如下形式？](./img/essence/essence3 ':size=WIDTHxHEIGHT')
 
 同样的理论可以被映射到三维空间，对于三维的向量，其也有三个顺序的值。   
 
@@ -95,12 +95,12 @@
 
 如下图为坐标系A，向量i与向量j分别为空间中A坐标系的基向量，两向量组合的张成空间为整个二维平面。所以向量V可以通过向量i与j组合得到。   
 
-![平面中向量可以是基向量的组合](./img/essence4 ':size=WIDTHxHEIGHT')
+![平面中向量可以是基向量的组合](./img/essence/essence4 ':size=WIDTHxHEIGHT')
 
 如下，再对空间坐标系A进行线性**变换**，获得空间坐标系B，而A坐标系的基向量i与j在变换后被拉伸旋转为i'与j'，详细请见下图。    
 同时注意，横平竖直的网格线由坐标系A所衍生。   
 
-![坐标系A进行线性变换后](./img/essence5 ':size=WIDTHxHEIGHT')
+![坐标系A进行线性变换后](./img/essence/essence5 ':size=WIDTHxHEIGHT')
 
 上图中，对于基坐标i',j'的表达视角源于坐标系A，所以，最终带入算式得到的向量V'也是基于坐标系A视角的。
 
