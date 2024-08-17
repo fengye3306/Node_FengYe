@@ -102,12 +102,28 @@ a_n = \frac{f^{(n)}(x_0)}{n!}
 
 基于上面的推导，函数@f(x)@在@x_0@处的泰勒展开式为：    
 @@
-p_n(x_0) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n = f(x_0) + \frac{f' \quad (x_0)}{1!}(x - x_0) + \frac{f'' \quad (x_0)}{2!}(x - x_0)^2 + \frac{f''' \quad (x_0)}{3!}(x - x_0)^3 + \ldots + \frac{f^{(n)} \quad (x_0)}{n!} (x - x_0)^n 
+p_n(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n = f(x_0) + \frac{f' \quad (x_0)}{1!}(x - x_0) + \frac{f'' \quad (x_0)}{2!}(x - x_0)^2 + \frac{f''' \quad (x_0)}{3!}(x - x_0)^3 + \ldots + \frac{f^{(n)} \quad (x_0)}{n!} (x - x_0)^n 
 @@  
 
 @@
-f(x_0) = p_n(x) + \text{误差（皮亚诺余项）}
+f(x) = p_n(x) + \text{高阶无穷小误差（皮亚诺余项）}
 @@  
+
+
+> 证明@f(x)-p_n(x)@是高阶无穷小    
+
+**高阶无穷小定义：**
+当@x@接近@x_0@时，@f(x) - p_n(x)@的大小比@(x - x_0)^{n+1}@要小得多。   
+
+即证明  
+
+@@
+\lim_{x \to x_0} \frac{f(x) - p_n(x)}{(x - x_0)^{n+1}} = 0
+@@
+
+
+
+   
 
 
 
