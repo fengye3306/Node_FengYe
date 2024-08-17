@@ -1,7 +1,7 @@
 # 傅里叶变换  
 
 ```link
-#知乎@Heinrich​ #傅里叶分析之掐死教程
+# TITLE:  傅里叶分析之掐死教程
 https://zhuanlan.zhihu.com/p/19763358
 ```
 
@@ -9,14 +9,14 @@ https://zhuanlan.zhihu.com/p/19763358
 
 > 内积
 
-平面解析几何向量内积公式    
+平面解析几何向量内积公式      
 @@
 \mathbf{a} \cdot \mathbf{b} = \mathbf{a} \mathbf{b} \cos\theta
 @@
 当@\theta@角度为@90°@时，两向量互相垂直，@\cos{90} = 0@两向量正交。  
 
 
-扩展，n维空间中的向量内积代数形式   
+n维空间中的向量内积代数形式   
 @@
 \mathbf{a} \cdot \mathbf{b} = \sum_{i=1}^{n} a_i b_i
 @@
