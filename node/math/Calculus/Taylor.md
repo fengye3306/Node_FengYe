@@ -8,8 +8,8 @@
 \pi = 3.14159\ldots = 3 \times 10^0 + 1 \times \frac{1}{10^1} + 4 \times \frac{1}{10^2} + 1 \times \frac{1}{10^3} + \ldots
 @@
 
-通过类比方式，是否任意曲线可以通过`x^n`合成呢？   
-将 \sin(x) 展开为 x 的幂级数   
+通过类比方式，是否任意曲线可以通过@x^n@合成呢？   
+将 @\sin(x)@ 展开为 @x@ 的幂级数   
 
 @@
 \sin(x) = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \ldots = \sum_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!}
