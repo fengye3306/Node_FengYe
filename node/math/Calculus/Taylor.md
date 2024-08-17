@@ -102,7 +102,7 @@ a_n = \frac{f^{(n)}(x_0)}{n!}
 
 基于上面的推导，函数@f(x)@在@x_0@处的泰勒展开式为：    
 @@
-f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n = f(x_0) + \frac{f' (x_0)}{1!}(x - x_0) + \frac{f'' (x_0)}{2!}(x - x_0)^2 + \frac{f''' (x_0)}{3!}(x - x_0)^3 + \ldots
+f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n = f(x_0) + \frac{f' \quad (x_0)}{1!}(x - x_0) + \frac{f'' \quad (x_0)}{2!}(x - x_0)^2 + \frac{f''' \quad (x_0)}{3!}(x - x_0)^3 + \ldots
 @@  
 
 
