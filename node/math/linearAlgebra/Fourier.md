@@ -64,8 +64,7 @@ n维空间中的向量内积代数形式
 
 ![组合形式](./img/Fourier/02.png ':size=WIDTHxHEIGHT')  
 
-
-
+## 2Π为周期函数傅里叶级数展开  
 
 
 
