@@ -1,8 +1,11 @@
 
 
-## git克隆附带子库
+## 拷贝第三方依赖
+
+例如CloudCompare 其依赖于其他第三方项，直接进行clone 并不会自动拷贝第三方项。  
 
 ```bash
+# 使得拷贝第三方依赖
 git submodule update --init --recursive
 ```
 
