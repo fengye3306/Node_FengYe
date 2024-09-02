@@ -112,7 +112,7 @@ n维空间中的向量内积代数形式
 
 三角函数系（trigonometric function system）  
 通常指的是一个包含一系列三角函数的集合。这些函数用于描述和分析周期性现象或信号。   
-其中@0@，@1@分别为 @\sin 0@和@\cos 0@。   
+其中@0@为 @\sin 0@，@1@为@\cos 0@。   
 
 @@
 \{0, 1, \sin x, \cos x, \sin 2x, \cos 2x, \dots, \sin nx, \cos nx\}
