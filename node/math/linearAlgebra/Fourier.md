@@ -145,18 +145,17 @@ n维空间中的向量内积代数形式
 f(x) = a_0 + \sum_{n=1}^{\infty} \left( a_n \cos(nx) + b_n \sin(nx) \right)
 @@
 
-
 其中，@a_0@，@a_n@，@b_n@均为常数项：  
 @@
 a_0 = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x)\, dx
 a_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(nx)\, dx
 b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(nx)\, dx
 @@
+  
+1. **傅里叶级数展开式的由来**  
 
+2. **常数项求解**  
 
+> 周期为2L的函数展开为傅里叶级数推导 
 
-
-
-
-
-
+## 傅里叶级数的复数形式  
