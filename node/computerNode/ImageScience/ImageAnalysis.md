@@ -31,7 +31,6 @@ F(u, v) = \sum_{x=0}^{M-1} \sum_{y=0}^{N-1} f(x, y) \cdot e^{-2\pi i \left(\frac
 
 
 
-
 ### cv::dft 离散傅里叶变换  
 
 ```cpp
@@ -68,6 +67,8 @@ cv::Mat mag_img = planes[0];
 mag_img += cv::Scalar::all(1);
 cv::log(mag_img, mag_img);
 ```
+
+
 
 ### cv::idft 离散傅里叶逆变换  
 
