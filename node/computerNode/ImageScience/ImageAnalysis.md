@@ -201,26 +201,60 @@ integral(img, sum, CV_64F);  // 显式指定使用64位浮点数
 ```  
 
 形参`sdepth`决定积分图像中元素数据类型深度，更高的数据类型深度（如 CV_64F）虽然可以提供更高的精度和容量，但同时也会增加计算资源和内存的消耗。而过低的数据类型深度则产生数据溢出风险。     
-值`-1`表示自动求解元素数据类型深度。
+值`-1`表示自动求解元素数据类型深度。   
+
 ### cv::integral平方求和积分
+平方求和积分图为图像中每个位置 (x, y) 提供从 (0, 0) 到 (x, y) 所有像素的平方值累积和。这对于计算局部窗口的方差和标准差尤其有用。
+
+```cpp
+#include <opencv2/opencv.hpp>
+
+int main() {
+    cv::Mat img = cv::imread("path_to_image.jpg", cv::IMREAD_GRAYSCALE); // 加载灰度图像
+    cv::Mat sum, sqsum;
+
+    // 计算标准积分图和平方积分图
+    cv::integral(img, sum, sqsum, CV_64F); // 显式指定使用64位浮点数
+
+    return 0;
+}
+```
 
 ### cv::integral倾斜求和积分
 
+倾斜求和积分图（也称为旋转积分图）计算从 (0, 0) 到每个位置 (x, y) 经过45度旋转的所有像素的累积和。这对于检测图像中的倾斜特征和模式匹配非常有用。  
+
+```cpp
+#include <opencv2/opencv.hpp>
+
+int main() {
+    cv::Mat img = cv::imread("path_to_image.jpg", cv::IMREAD_GRAYSCALE); // 加载灰度图像
+    cv::Mat sum, sqsum, tilted;
+
+    // 计算标准积分图、平方积分图和倾斜积分图
+    cv::integral(img, sum, sqsum, tilted, CV_64F); // 显式指定使用64位浮点数
+
+    return 0;
+}
+```
+
 ## **Canny边缘检测**  
 
-## Hough变换
+
+
+## **Hough变换**
 
 ### Hough线变换
 
 ### Hough圆变换
 
-## 距离变换 
+## **距离变换** 
 
 ### 无标记距离变换
 
 ### 有标记距离变换
 
-## 分割
+## **分割**
 
 ### 漫水填充
 
