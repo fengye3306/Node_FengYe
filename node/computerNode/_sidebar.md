@@ -1,7 +1,5 @@
 <!-- /node/computerNode/computerSciences -->
 
-
-
 * **领域**   
     * [传统图像学](./ImageScience/)
     * [质量控制](./GeometricalTolerances/)
