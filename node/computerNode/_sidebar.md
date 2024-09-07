@@ -2,6 +2,7 @@
 
 * **领域**   
     * [传统图像学](./ImageScience/)
+    * [点云学](./CloudPoint/)
     * [质量控制](./GeometricalTolerances/)
 
 * **公有学科**  
