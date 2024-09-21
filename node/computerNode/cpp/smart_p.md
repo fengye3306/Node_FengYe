@@ -1,4 +1,4 @@
-# shared_ptr
+## std::shared_ptr
 
 *shared_ptr 共享对象的所有权，并管理对象的生命周期*  
 
@@ -14,7 +14,7 @@ std::shared_ptr<int> sp2 = sp1;
 // 引用计数为 2，只有 sp1 和 sp2 都销毁时，内存才会被释放
 ```
 
-# weak_ptr
+## std::weak_ptr
 
 *weak_ptr 只是一个弱引用，不管理对象的生命周期*   
 
