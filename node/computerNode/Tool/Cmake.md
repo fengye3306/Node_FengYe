@@ -1,136 +1,62 @@
 # Cmake
 
-## Cmake 基础语法
-
-### 构建  
-
-> 构建动态链接库
-
-```cmake
-    add_library(${PROJECT_NAME} SHARED
-        ${header_list}
-        ${source_list}
-    )
-```
-
-### RPATH  
-
-> 失效的 REPATH
-
-我遇到了一个比较奇怪的事情，`add_subdirectory( ./test )`中，对`set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)`的设置并未对这个可执行文件工程生效。   
-无论我如何设置路径，甚至用上了绝对路径`libopencv_core.so.408`都不能正常的在INSTALL版本中被强制链接。但是在`BUILD`版本的中,它是生效 。   
-直到我将set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)设置放到了顶层目录中，终于，执行生效！！！
-
-问题原因需要进一步测试
-
-```cmake
-cmake_minimum_required( VERSION 3.10 )
-project( Task_01_First CXX ) 
-
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
-add_subdirectory( ./Common )    # 工程接口 
-add_subdirectory( ./plugin )    # 插件 
-add_subdirectory( ./test )      # 主工程 
-```
 
 
 
-## 模块
+## RPATH  
 
-### VSCode_CmakeTool
-
-> settings.json 增加编译选择
+> REPATH字段
 
 ```cpp
-"cmake.configureArgs": [
-    "-DUSE_QT6=off",
-    "-DBUILD_TESTING=on",
-    "-DBUILD_EXAMPLES=on",
-    "-DCMAKE_PREFIX_PATH=/home/hongkeli/lib/qt/5.15.2/gcc_64;/home/hongkeli/lib/OpenCV/install/lib/cmake/opencv4;/home/hongkeli/lib/googletest/install/lib/cmake/GTest"
-]
+# 启动REPATH ：CMAKE_INSTALL_RPATH_USE_LINK_PATH
+# example
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+# 添加库寻址路径 ：CMAKE_INSTALL_RPATH
+# example
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib/")
 ```
 
+> RPATH失效的问题  
 
-### include作用域互不干扰策略
+1. RPATH添加在add_executable 之前反而生效，之后则不生效，这和官方文档背离
+2. 在ubuntu系统下稳定运行的RPATH 在windows上完全不生效
 
-```CC
-# NO_POLICY_SCOPE标识符表示此配置并不影响外部作用域
-include(CMakePolicies NO_POLICY_SCOPE)   
+## 设定cpp标准
+
+
+> 一次标准设定引发的问题
+
+```cpp
+'std::filesystem::__cxx11::path' and 'std::filesystem::__cxx11::path')
+	|| (__p.has_root_name() && __p.root_name() != root_name()))
+note:   'std::filesystem::__cxx11::path' is not derived from 'const std::reverse_iterator<_Iterator>'
+这个错误通常是由于使用了不兼容的迭代器类型或不正确的类型比较导致的。具体来说，std::filesystem 中的 path 类型与某些 STL 组件之间的类型不匹配。
 ```
 
-> 扩展   
-
-* OPTIONAL     
-表示被包含的文件是可选的。如果CMake不能找到这个文件，它将不会产生错误，而是继续处理其它命令。
-* RESULT_VARIABLE    
-这个选项允许你指定一个变量来保存include()命令的返回结果。如果被包含的文件被成功处理，这个变量的值将会被设置为NOTFOUND。
-* NO_POLICY_SCOPE     
-这个选项表示被包含的文件中的策略设置不应影响到包含它的父级作用域。
-
-
-### 工程文件的优雅处理
-
-```cc
-
-file( GLOB header_list *.h )				# 所有.h文件
-file( GLOB source_list *.cpp )				# 所有.cpp文件
-file( GLOB ui_list ui_templates/*.ui )		# 所有UI文件
-file( GLOB qrc_list ../qCC/*.qrc )			# 所有资源文件
-file( GLOB rc_list ../qCC/*.rc )	    	# 所有.rc文件
-
-# 使用Qt5的uic工具处理.ui文件并生成头文件，
-# 将生成的头文件路径保存到generated_ui_list变量中。
-qt5_wrap_ui( generated_ui_list ${ui_list} )
-# 使用Qt5的rcc工具处理.qrc文件并生成源文件，
-# 将生成的源文件路径保存到generated_qrc_list变量中。
-qt5_add_resources( generated_qrc_list ${qrc_list} )
-
-
-
-# 生成结果文件 
-if( MSVC )
-	# App icon with MSVC
-	set( rc_list images/icon/cc_viewer_icon.rc )
-
-	#to get rid of the (system) console
-	add_executable( ${PROJECT_NAME} 
-		WIN32 
-		${header_list} 
-		${source_list} 
-		${generated_ui_list} 
-		${generated_qrc_list}
-		${rc_list}  
-		${CMAKE_CURRENT_SOURCE_DIR}/../scripts/windows/qt5.natvis	# 此文件用于在调试时更好的显示qt类型
-	)
-
-elseif( APPLE )
-	add_executable( ${PROJECT_NAME} 
-		MACOSX_BUNDLE 
-		${header_list} 
-		${source_list} 
-		${generated_ui_list} 
-		${generated_qrc_list} 
-		${rc_list} 
-	)
-else()
-	add_executable( ${PROJECT_NAME} 
-		${header_list} 
-		${source_list} 
-		${generated_ui_list} 
-		${generated_qrc_list} 
-		${rc_list} 
-	)
-endif()
+解决方案当然是启用更高的cpp标准。    
+当然，你知道，你早已经启用了cpp17标准。  
+```cmake
+# 支持c++17标准
+target_compile_features(
+	${PROJECT_NAME} PRIVATE cxx_std_17
+)
 ```
+甚至当你将标准降级为11，或是使用
+```cpp
+# 设置 C++ 标准为 C++17
+set(CMAKE_CXX_STANDARD 17)  
+```
+都不会再引发这个问题.  
+为什么？  
 
 
+## find_package
 
-### find_package 确定对应包名
+`find_package指令用于在已知环境中导入包模块`  
+然而，对于包名：是Qt?还是qt?是OpenCV?亦或是opencv?你是否也因为这件事头疼过？     
 
-是Qt?还是qt?是OpenCV?亦或是opencv?你是否也因为这件事头疼过？    
-
-*nodeeditor* 是一个第三方库，我将其编译为动态链接库，cmake项目欲以find_package将其引入。   
+*nodeeditor* 是一个第三方库，我将其编译为动态链接库，cmake项目欲以find_package将其引入。    
 ```cmake
 find_package(nodeeditor REQUIRED)    
 ```
@@ -143,6 +69,5 @@ find_package的调用其实基于*Config.cmake*文件，*nodeeditor* 库编译�
 find_package(QtNodes REQUIRED)  
 ```
 此时成功寻址。   
-
 下次需要用到find_package 报错头疼时，不妨去看看config文件前缀。
 
