@@ -20,27 +20,3 @@ uname -m
 # aarch64      ARM_64
 # x86_64       x86_64
 ```
-## Qt源码编译  
-
-```link
-# qt源码下载
-https://download.qt.io/archive/qt/
-
-# 官方-qt源码编译文档
-https://wiki.qt.io/Building_Qt_5_from_Git  
-```
-
-## Ubuntu配置ARM交叉编译支持 
-
-*在 Ubuntu x86 系统上进行 ARM64 程序的交叉编译*  
-
-```sh
-sudo apt-get update
-
-# 安装用于 ARM32（ARMv7 和更早版本）平台的交叉编译工具链
-sudo apt-get install gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
-
-# 安装用于 ARM64（AArch64）平台的交叉编译工具链
-sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
-```
-
