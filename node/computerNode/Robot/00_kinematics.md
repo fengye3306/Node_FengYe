@@ -167,3 +167,6 @@ J = F \Delta t
 
 ## 正运动学   
 
+![正运动学](./img/00_kinematics/2.png ':size=WIDTHxHEIGHT')
+
+**机器人正运动学其实就一句话：**我知道@\theta_1@@\theta_2@@\theta_3@@\theta_4@@\theta_n@......的角度，我是不是可以推导出机器人末端在世界坐标系下的位置？    
