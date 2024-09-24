@@ -262,15 +262,19 @@ Y 轴的方向通过右手定则确定，即右手大拇指指向 X 轴，食指
 
 在此过程中，还涉及一个关键问题，即驱动控制单元如何控制关节的运动。   
 
-以马达为例，假设马达转动角度为@\theta_{\text{motor}} = 1^\circ@ （motor，网页latex显示不清晰）  
+以马达为例，假设马达转动角度为@\theta_{\text{motor}} = 2^\circ@ （motor，网页latex显示不清晰）  
 则关节的转动角度为@\theta_{\text{jont}} = 1^\circ@。     
 这表明控制单元的转动与杆件的转动之间存在转换关系，这正是**齿轮比（减速比）**的概念由来。        
 该过程的减速比可表示为：  
 
 @@ 
-\text{Gear Ratio} = \frac{\theta_{\text{motor}}}{\theta_{\text{joint}}}
+\text{Gear Ratio} = \frac{\theta_{\text{joint}}}{\theta_{\text{motor}}}
 @@   
 
+这个例子中减速比@N@为:  
+@@
+\text{Gear Ratio} = \frac{1}{2} = 0.5
+@@
 
 
 
