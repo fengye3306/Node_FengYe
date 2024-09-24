@@ -256,14 +256,17 @@ Y 轴的方向通过右手定则确定，即右手大拇指指向 X 轴，食指
 *正运动学Forward Kinematics*   
 ![正运动学](./img/00_kinematics/8.png ':size=300')   
 
-正运动学是指通过每个关节角度@\theta_{\text{jont}}@计算末端执行器@p@的位置。    
+正运动学是指通过每个关节角度@\theta_{\text{jont}}@（jont，网页latex显示不清晰），计算末端执行器@p@的位置。    
 
 ### 减速比
 
 在此过程中，还涉及一个关键问题，即驱动控制单元如何控制关节的运动。   
-以马达为例，假设马达转动角度为@\theta_{\text{motor}} = 1^\circ@ 则关节的转动角度为@\theta_{\text{jont}} = 1^\circ@。     
+
+以马达为例，假设马达转动角度为@\theta_{\text{motor}} = 1^\circ@ （motor，网页latex显示不清晰）  
+则关节的转动角度为@\theta_{\text{jont}} = 1^\circ@。     
 这表明控制单元的转动与杆件的转动之间存在转换关系，这正是**齿轮比（减速比）**的概念由来。        
 该过程的减速比可表示为：  
+
 @@ 
 \text{Gear Ratio} = \frac{\theta_{\text{motor}}}{\theta_{\text{joint}}}
 @@   
