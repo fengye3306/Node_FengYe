@@ -241,16 +241,16 @@ Y 轴的方向通过右手定则确定，即右手大拇指指向 X 轴，食指
 
 末端杆（n）无法确定X轴，其X轴取（n-1）轴同向延伸。   
 
+### DH参数转换仿射变换矩阵
+
+![DH转换仿射变换矩阵](./img/00_kinematics/7.png ':size=300')       
+
 
 ### Craig DH & Standard DH  
 
 ![Craig](./img/00_kinematics/9.png ':size=300')       
 ![Standard](./img/00_kinematics/10.png ':size=300')    
 
-
-### DH参数转换仿射变换矩阵
-
-![DH转换仿射变换矩阵](./img/00_kinematics/7.png ':size=300')       
 
 ## 正运动学（Forward Kinematics）  
 
