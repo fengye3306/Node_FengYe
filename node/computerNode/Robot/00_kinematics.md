@@ -188,6 +188,27 @@ DH表示法的四个数描述了当前轴的关节坐标系，如何被上一个
 @@
 
 
+## Inverse Kinematics   
+
+*逆运动学Inverse Kinematics*     
+
+
+> 求解概念 - workspace
+
+![求解概念](./img/00_kinematics/11.png ':size=300')   
+
+* **Reachable workspace**    
+    手臂可以用一种以上的姿态到达的位置集合    
+    
+    如图机构@l_1 > l_2@，机构仅有Reachable workspace，为外环。   
+
+* **Dexterous workspace**    
+    手臂可以用任何的姿态到达的位置的集合，其是Reachable workspace的子集     
+
+    如图机构@l_1 = l_2@，存在Reachable workspace 为机构原点，对于任意\theta_1@都存在@\theta_2@指向原点。   
+
+> 求解概念 - Subspace   
+
 
 
 
