@@ -237,10 +237,10 @@ ONPUT
 
 ### ibask   
 
-`ibconfig`是用于写入，`ibask`就是用于读取。   
-
 ```cpp
 unsigned int ibask (int ud, int option, int *value) 
+
+ibconfig是用于写入，而ibask用于读取  
 
 INPUT
     ud:         板卡或设备的单元描述符
