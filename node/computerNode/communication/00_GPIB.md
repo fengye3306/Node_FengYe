@@ -247,6 +247,39 @@ ONPUT
 
 ### 高级设备管理接口
 
+| 函数名 | 解释 |
+|--------|------|
+| `AllSpoll` | 执行串行轮询操作，获取指定设备的串行轮询状态。 |
+| `DevClear` | 向指定的设备发送设备清除（Device Clear）命令。 |
+| `DevClearList` | 向指定的设备列表发送设备清除（Device Clear）命令。 |
+| `EnableLocal` | 使设备恢复本地控制模式。 |
+| `EnableRemote` | 使设备进入远程控制模式。 |
+| `FindLstn` | 查找设备列表中的侦听设备。 |
+| `FindRQS` | 查找并返回哪个设备正在请求服务。 |
+| `PPoll` | 执行并行轮询操作，返回轮询结果。 |
+| `PPollConfig` | 配置指定设备的并行轮询设置。 |
+| `PPollUnconfig` | 取消设备列表的并行轮询配置。 |
+| `PassControl` | 将总线控制权传递给指定设备。 |
+| `RcvRespMsg` | 接收响应消息，并将其存储在缓冲区中。 |
+| `ReadStatusByte` | 读取设备的状态字节。 |
+| `Receive` | 从指定设备接收数据并存储在缓冲区中。 |
+| `ReceiveSetup` | 为设备接收数据做好准备。 |
+| `ResetSys` | 重置系统，复位设备列表中的所有设备。 |
+| `Send` | 向指定设备发送数据。 |
+| `SendCmds` | 向设备发送命令字节。 |
+| `SendDataBytes` | 向设备发送数据字节。 |
+| `SendIFC` | 发送接口清除（Interface Clear）命令。 |
+| `SendLLO` | 发送本地锁定禁止（Local Lockout Disable）命令。 |
+| `SendList` | 向指定设备列表发送数据。 |
+| `SendSetup` | 为发送数据到设备列表做好准备。 |
+| `SetRWLS` | 设置设备的远程写锁（Remote Write Lock）。 |
+| `TestSRQ` | 测试服务请求（Service Request）的状态。 |
+| `TestSys` | 测试设备列表中的设备。 |
+| `Trigger` | 触发设备执行操作。 |
+| `TriggerList` | 触发设备列表中的设备执行操作。 |
+| `WaitSRQ` | 等待服务请求（Service Request）信号。 |
+
+
 
 
 ## 轮询查询  
