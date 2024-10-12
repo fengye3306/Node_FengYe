@@ -1,9 +1,7 @@
 # GPIB
 
-```msg
--- 本文章使用:NI-488.2协议 --
-协议下载地址:https://www.ni.com/zh-cn/support/downloads/drivers/download.ni-488-2.html#544048
-```
+> 本文章使用:NI-488.2协议  
+协议下载地址:`https://www.ni.com/zh-cn/support/downloads/drivers/download.ni-488-2.html#544048`
 
 ## 名词解读  
 
