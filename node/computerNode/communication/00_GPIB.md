@@ -252,9 +252,8 @@ ONPUT
 
 > option 可选值
 
-
-
-
+`ibconfig` 的所有可选值均可于`ibask`状态值调用，除此之外，有一些只读参数只供`option`调用,如下：   
+*文档搜索：ibask Board Configuration Parameter Options*  
 
 
 ## 轮询查询  
