@@ -144,85 +144,36 @@ ONPUT
     函数返回值:  Ibsta状态字
 ```
 
-> option可选值  
+> option 可选值  
 
-* IbcPAD (0x0001): 主地址 (Primary Address)
-用于设置 GPIB 设备的主地址。
-
-* IbcSAD (0x0002): 次地址 (Secondary Address)
-设置 GPIB 设备的次地址。
-
-* IbcTMO (0x0003): 超时值 (Timeout Value)
-配置设备操作的超时时间。
-
-* IbcEOT (0x0004): 是否在最后一个数据字节发送 EOI (Send EOI with last data byte?)
-指定是否在发送最后一个数据字节时发送 EOI（结束标识符）。
-
-* IbcPPC (0x0005): 并行轮询配置 (Parallel Poll Configure)
-用于配置并行轮询模式。
-
-* IbcREADDR (0x0006): 重复寻址 (Repeat Addressing)
-允许重复发送寻址命令。
-
-* IbcAUTOPOLL (0x0007): 禁用自动串行轮询 (Disable Auto Serial Polling)
-配置是否禁用自动串行轮询功能。
-
-* IbcSC (0x000A): 板是否为系统控制器 (Board is System Controller?)
-设置此板卡是否具有系统控制器功能。
-
-* IbcSRE (0x000B): 在设备调用中断时断言 SRE (Assert SRE on device calls?)
-配置在设备中断时是否断言 SRE（串行轮询使能）。
-
-* IbcEOSrd (0x000C): 在 EOS 时终止读取 (Terminate reads on EOS)
-配置当遇到 EOS（结束符）字符时是否停止读取数据。
-
-* IbcEOSwrt (0x000D): 发送 EOI 与 EOS 字符 (Send EOI with EOS character)
-指定是否在发送 EOS 字符时发送 EOI。
-
-* IbcEOScmp (0x000E): 使用 7 位或 8 位 EOS 比较 (Use 7 or 8-bit EOS compare)
-指定在 EOS 比较中使用 7 位还是 8 位数据。
-
-* IbcEOSchar (0x000F): EOS 字符 (The EOS character)
-设置 EOS（结束符）字符。
-
-* IbcPP2 (0x0010): 使用并行轮询模式 2 (Use Parallel Poll Mode 2)
-配置设备使用并行轮询模式 2。
-
-* IbcTIMING (0x0011): 正常、高速或超高速定时 (NORMAL, HIGH, or VERY_HIGH timing)
-设置通信的定时模式，包括正常、高速或超高速。
-
-* IbcDMA (0x0012): 使用 DMA 进行 I/O (Use DMA for I/O)
-指定是否使用 DMA 进行 I/O 操作。
-
-* IbcSendLLO (0x0017): 启用/禁用发送 LLO (Enable/disable the sending of LLO)
-配置是否启用发送 LLO（本地锁定禁用）命令。
-
-* IbcSPollTime (0x0018): 设置串行轮询的超时值 (Set the timeout value for serial polls)
-设置串行轮询的超时时间。
-
-* IbcPPollTime (0x0019): 设置并行轮询的时间长度 (Set the parallel poll length period)
-配置并行轮询的时间长度。
-
-* IbcEndBitIsNormal (0x001A): 从 IBSTA 的 END 位中移除 EOS (Remove EOS from END bit of IBSTA)
-指定是否从 IBSTA（状态字）中的 END 位中移除 EOS。
-
-* IbcUnAddr (0x001B): 启用/禁用设备未寻址 (Enable/disable device unaddressing)
-配置设备是否启用未寻址功能。
-
-* IbcHSCableLength (0x001F): 为高速定时指定电缆长度 (Length of cable specified for high speed timing)
-设置用于高速定时的电缆长度。
-
-* IbcIst (0x0020): 设置 IST 位 (Set the IST bit)
-配置 IST 位，用于确定是否参与串行轮询。
-
-* IbcRsv (0x0021): 设置 RSV 字节 (Set the RSV byte)
-配置 RSV 字节，通常用于并行轮询操作。
-
-* IbcLON (0x0022): 进入仅侦听模式 (Enter listen only mode)
-配置设备进入仅侦听模式，不发送命令。
-
-* IbcEOS (0x0025): ibeos 的宏 (Macro for ibeos)
-此宏用于便捷地配置 EOS 相关参数。
+| **参数名**            | **功能描述**                                                                                               |
+|-----------------------|------------------------------------------------------------------------------------------------------------|
+| `IbcPAD (0x0001)`      | 主地址 (Primary Address)：用于设置 GPIB 设备的主地址。                                                      |
+| `IbcSAD (0x0002)`      | 次地址 (Secondary Address)：设置 GPIB 设备的次地址。                                                       |
+| `IbcTMO (0x0003)`      | 超时值 (Timeout Value)：配置设备操作的超时时间。                                                           |
+| `IbcEOT (0x0004)`      | 是否在最后一个数据字节发送 EOI (Send EOI with last data byte?)：指定是否在发送最后一个数据字节时发送 EOI。   |
+| `IbcPPC (0x0005)`      | 并行轮询配置 (Parallel Poll Configure)：用于配置并行轮询模式。                                             |
+| `IbcREADDR (0x0006)`   | 重复寻址 (Repeat Addressing)：允许重复发送寻址命令。                                                       |
+| `IbcAUTOPOLL (0x0007)` | 禁用自动串行轮询 (Disable Auto Serial Polling)：配置是否禁用自动串行轮询功能。                              |
+| `IbcSC (0x000A)`       | 板是否为系统控制器 (Board is System Controller?)：设置此板卡是否具有系统控制器功能。                        |
+| `IbcSRE (0x000B)`      | 在设备调用中断时断言 SRE (Assert SRE on device calls?)：配置在设备中断时是否断言 SRE。                      |
+| `IbcEOSrd (0x000C)`    | 在 EOS 时终止读取 (Terminate reads on EOS)：配置当遇到 EOS 字符时是否停止读取数据。                         |
+| `IbcEOSwrt (0x000D)`   | 发送 EOI 与 EOS 字符 (Send EOI with EOS character)：指定是否在发送 EOS 字符时发送 EOI。                     |
+| `IbcEOScmp (0x000E)`   | 使用 7 位或 8 位 EOS 比较 (Use 7 or 8-bit EOS compare)：指定在 EOS 比较中使用 7 位还是 8 位数据。           |
+| `IbcEOSchar (0x000F)`  | EOS 字符 (The EOS character)：设置 EOS（结束符）字符。                                                     |
+| `IbcPP2 (0x0010)`      | 使用并行轮询模式 2 (Use Parallel Poll Mode 2)：配置设备使用并行轮询模式 2。                                |
+| `IbcTIMING (0x0011)`   | 正常、高速或超高速定时 (NORMAL, HIGH, or VERY_HIGH timing)：设置通信的定时模式，包括正常、高速或超高速。     |
+| `IbcDMA (0x0012)`      | 使用 DMA 进行 I/O (Use DMA for I/O)：指定是否使用 DMA 进行 I/O 操作。                                      |
+| `IbcSendLLO (0x0017)`  | 启用/禁用发送 LLO (Enable/disable the sending of LLO)：配置是否启用发送 LLO 命令。                         |
+| `IbcSPollTime (0x0018)`| 设置串行轮询的超时值 (Set the timeout value for serial polls)：设置串行轮询的超时时间。                     |
+| `IbcPPollTime (0x0019)`| 设置并行轮询的时间长度 (Set the parallel poll length period)：配置并行轮询的时间长度。                     |
+| `IbcEndBitIsNormal (0x001A)`| 从 IBSTA 的 END 位中移除 EOS (Remove EOS from END bit of IBSTA)：指定是否从 IBSTA 的 END 位中移除 EOS。|
+| `IbcUnAddr (0x001B)`   | 启用/禁用设备未寻址 (Enable/disable device unaddressing)：配置设备是否启用未寻址功能。                     |
+| `IbcHSCableLength (0x001F)`| 为高速定时指定电缆长度 (Length of cable specified for high speed timing)：设置用于高速定时的电缆长度。 |
+| `IbcIst (0x0020)`      | 设置 IST 位 (Set the IST bit)：配置 IST 位，用于确定是否参与串行轮询。                                      |
+| `IbcRsv (0x0021)`      | 设置 RSV 字节 (Set the RSV byte)：配置 RSV 字节，通常用于并行轮询操作。                                    |
+| `IbcLON (0x0022)`      | 进入仅侦听模式 (Enter listen only mode)：配置设备进入仅侦听模式，不发送命令。                             |
+| `IbcEOS (0x0025)`      | ibeos 的宏 (Macro for ibeos)：此宏用于便捷地配置 EOS 相关参数。                                             |
 
 > 异常
 
