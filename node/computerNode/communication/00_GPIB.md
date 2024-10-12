@@ -134,18 +134,17 @@ if (!(Ibsta() & ERR)){
 ```cpp
 unsigned int ibconfig (int ud, int option, int value)  
 
+将选定板卡或设备的配置项更改为指定值,option 可以是任何定义的选项。
+
 INPUT
     ud:         板卡或设备的单元描述符
     option:     选择要更改的软件配置项的参数
     value:      要更改为的指定配置项的值
 ONPUT
     函数返回值:  Ibsta状态字
-
-将选定板卡或设备的配置项更改为指定值。
-option 可以是任何定义的选项（请参见 ibconfig 板配置参数选项或 ibconfig 设备配置参数选项）
 ```
 
-> 选择要更改的软件配置项的参数  
+> option可选值  
 
 * IbcPAD (0x0001): 主地址 (Primary Address)
 用于设置 GPIB 设备的主地址。
@@ -225,7 +224,6 @@ option 可以是任何定义的选项（请参见 ibconfig 板配置参数选项
 * IbcEOS (0x0025): ibeos 的宏 (Macro for ibeos)
 此宏用于便捷地配置 EOS 相关参数。
 
-
 > 异常
 
 * EARG: option 或 value 无效。ibconfig 板配置参数选项表列出了有效选项。
@@ -236,6 +234,27 @@ option 可以是任何定义的选项（请参见 ibconfig 板配置参数选项
 * ENEB: 接口未安装或未正确配置。
 * EOIP: 异步 I/O 正在进行中。
 * ESAC: 该板不具备系统控制器能力。
+
+### ibask   
+
+`ibconfig`是用于写入，`ibask`就是用于读取。   
+
+```cpp
+unsigned int ibask (int ud, int option, int *value) 
+
+INPUT
+    ud:         板卡或设备的单元描述符
+    option:     选择要更改的软件配置项的参数
+    value:      所选配置项的当前值。
+ONPUT
+    函数返回值:  Ibsta状态字
+```
+
+> option 可选值
+
+
+
+
 
 
 ## 轮询查询  
