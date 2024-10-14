@@ -4,6 +4,7 @@
     * [机器视觉](./IVS/)
     * [Robot](./Robot/)
     * [质量控制](./GeometricalTolerances/)
+    * [通信](./communication/)
 * **基础**  
     * [cpp](./cpp/)
     * [工具](./Tool/)
