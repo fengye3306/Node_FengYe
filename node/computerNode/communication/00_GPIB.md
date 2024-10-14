@@ -3,16 +3,13 @@
 本文章使用:NI-488.2协议,协议下载地址:`https://www.ni.com/zh-cn/support/downloads/drivers/download.ni-488-2.html#544048`
 
 
-> 名词 
+## 名词 
 
-* 设备 (device)    
+> 设备 (device)    
 在 GPIB 系统中,"设备"(device)通常指那些与主控器进行交互的从设备,如仪器、传感器或测试设备。这些设备通常是GPIB总线上的从属设备,负责响应控制器的命令或请求,并发送或接收数据。
 
-* 控制器(board)   
+> 控制器(board)   
 控制器(controller)在 GPIB 系统中是负责管理总线和设备的主设备。控制器一般是计算机上安装的 GPIB 接口卡或主板上的通信模块,因此用 brd(board)来表示它。控制器的角色通常是在整个通信过程中控制总线的流程,比如处理设备间的中断、同步数据传输等。  
-
-
-
 
 
 ## 全局状态字
@@ -311,10 +308,20 @@ IbcSRE
 在 远程模式 下，设备的控制权交给外部设备（比如计算机），无法通过设备上的按钮操作。  
 总结：IbcSRE 代表了一个配置选项，控制 GPIB 通信中的 Remote Enable (REN) 线。当你设置 IbcSRE 为非零时，REN 线被断言，设备可以进入远程控制模式；如果 IbcSRE 设置为零，设备保持在本地模式。
 
+### 设备配置为CIC
+
+*主控制器————CIC(Controller-In-Charge)*
+CIC就是 当前负责控制 GPIB 总线通信的设备，通常是主机（例如计算机）或者仪器控制器。作为 CIC，设备可以执行以下操作：
+
+* 发送命令来控制总线上的其他设备。
+* 指定哪个设备可以讲话（Talker）和哪个设备可以监听（Listener）。
+* 控制 GPIB 总线上的数据流动和操作顺序。
+
+当 GPIB 控制器不是 CIC 时，它就不能发出总线控制命令。这时，控制器设备无法指示其他设备发送或接收数据，必须等待当前的 CIC 释放控制权，
+或者尝试通过特定操作（如 SendIFC 或 ibsic）成为新的 CIC。  
+
 
 ### 总线设备查询
-
-
 
 ```cpp
 void FindLstn 
@@ -340,7 +347,7 @@ Ibcnt 保存了 resultlist 中实际存储的地址数量。
 > 可能的错误  
 
 * EARG：padlist 中存在无效的主地址，Ibcnt 保存的是 padlist 数组中第一个无效地址的索引。
-* EBUS：GPIB 总线上没有连接任何设备。
+* EBUS：GPIB总线上没有连接任何设备，可以查看是否是因为接口松动。
 * ECIC：接口不是当前的控制者 (CIC)，需参考 SendIFC。
 * EDVR：NI-488.2 驱动配置不正确或未正确安装。
 * EHDL：boardID 超出范围。
@@ -348,7 +355,6 @@ Ibcnt 保存了 resultlist 中实际存储的地址数量。
 * ENEB：接口未安装或配置不正确。
 * EOIP：异步 I/O 正在进行中。
 * ETAB：GPIB 总线上找到的设备数超过了 limit。
-
 
 
 
