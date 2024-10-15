@@ -52,3 +52,6 @@ F = q \left( \mathbf{E} + \mathbf{v} \times \mathbf{B} \right)
 @@
 |\mathbf{F}| = 5 \, \text{A} \cdot 0.02 \, \text{T} \cdot \text{m} = 0.1 \, \text{N}
 @@
+
+
+
