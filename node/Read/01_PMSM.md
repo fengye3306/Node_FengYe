@@ -42,7 +42,13 @@ F = q \left( \mathbf{E} + \mathbf{v} \times \mathbf{B} \right)
 
 1. 电流元@d\mathbf{l}@与磁场@B@垂直，叉乘计算为
 
-\begin{align*}
+@@
 |d\mathbf{l} \times \mathbf{B}| &= d\mathbf{l} \cdot B \cdot \sin(90^\circ) \\
 |d\mathbf{l} \times \mathbf{B}| &= d\mathbf{l} \cdot B = 0.2 \, \text{m} \cdot 0.1 \, \text{T} = 0.02 \, \text{T} \cdot \text{m}
-\end{align*}
+@@
+
+2. 计算安培力  
+
+@@
+|\mathbf{F}| = 5 \, \text{A} \cdot 0.02 \, \text{T} \cdot \text{m} = 0.1 \, \text{N}
+@@
