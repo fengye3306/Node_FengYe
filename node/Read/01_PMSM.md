@@ -38,3 +38,22 @@ F = q \left( \mathbf{E} + \mathbf{v} \times \mathbf{B} \right)
 **矢量（Vector）**是由大小和方向共同决定的量，例如：速度、力、加速度、位移等。**可以进行加法、减法以及其他矢量运算（如点积和叉积）**    
 
 
+> 导线受力分析实例   
+
+假设一条长为  @d\mathbf{l} = 0.2m@的导线有@I = 5.5A@的电流，导线处于@\mathbf{B} = 0.1T@的均匀磁场中。 磁场方向垂直于导线（形成90°夹角）。计算导线所受到的安培力。   
+
+1. 电流元@d\mathbf{l}@与磁场@B@垂直，叉乘计算为
+
+@@
+|d\mathbf{l} \times \mathbf{B}| &= d\mathbf{l} \cdot B \cdot \sin(90^\circ) \\
+|d\mathbf{l} \times \mathbf{B}| &= d\mathbf{l} \cdot B = 0.2 \, \text{m} \cdot 0.1 \, \text{T} = 0.02 \, \text{T} \cdot \text{m}
+@@
+
+2. 计算安培力  
+
+@@
+|\mathbf{F}| = 5 \, \text{A} \cdot 0.02 \, \text{T} \cdot \text{m} = 0.1 \, \text{N}
+@@
+
+
+
