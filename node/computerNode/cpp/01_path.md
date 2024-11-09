@@ -1,14 +1,14 @@
 ## boost 
 
 > windows
+ 
+1. 下载boost库文件  
 
-1. 下载boost库文件
+`https://github.com/blackberry/Boost`    
 
-`https://github.com/blackberry/Boost`   
+2. 双击bootstrap.bat文件，生成b2.exe；   
 
-2. 双击bootstrap.bat文件，生成b2.exe；  
-
-3. 运行b2.exe编译项目  
+3. 运行b2.exe编译项目    
 
 ```cpp
 # 例
