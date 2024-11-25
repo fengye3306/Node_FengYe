@@ -356,7 +356,7 @@ TRAC:DATA?1, 100, "defbuffer1", READ, REL
 ## SCPI command reference
 
 
-### 读取指令
+### 单条测试
 
 1. :FETCh? 用于提取已存在的数据，不触发新的测量。
 2. :READ? 触发新的测量并返回结果，适用于单次测量。
@@ -367,20 +367,20 @@ TRAC:DATA?1, 100, "defbuffer1", READ, REL
 1. `*RCL` 该命令用于恢复之前使用 *SAV 命令保存的仪器设置。
 2. `*SAV`此命令用于保存当前的仪器设置为用户保存的设置。
 
-### 公式功能
+### CALCulate
 
-`CALCulate subsystem `  
+`CALCulate`公式子系统   
 
-### 配置仪表IO
+### DIGital
 
-`DIGital subsystem`
+`DIGital`配置仪表IO
 
 
-### 控制前面板的显示  
+### DISPlay  
 
-`:DISPlay`  
+`:DISPlay`子系统控制前面板的显示
 
-### 定义远程数据格式 
+### FORMat
 
 `FORMat` 子系统的命令用于选择在远程接口上传输仪器读数时使用的数据格式。这包括设置数据的ASCII格式的精度，以及定义二进制数据的字节顺序。下面详细解释这些命令的用法和功能。
 
@@ -441,6 +441,224 @@ Keithley 2450 SourceMeter® 的 OUTPut 子系统主要是用来控制设备的�
 `TRACe`子系统包含用于控制读取缓冲区的一系列命令。这些命令允许你管理和访问存储在仪器内部缓冲区中的测量数据，非常适合进行数据收集、分析和存储，特别是在需要自动化处理大量数据的情况下。   
 
 
+> 1_  :TRACe:ACTual?   
+
+this command contains the number or reading in the specified reading buffer.    
+得到指定缓冲区的 当前存储的数据个数     
+
+```scpi
+:TRACe:ACTual? "<bufferName>"   
+    <bufferName> = defbuffer1
+    一个字符串，用于表示被配置的缓冲区的名字，例如 defbuffer1 、defbuffer2等，
+    若是不配置本参数，默认参数是defbuffer1 
+
+# 示例
+
+创建了一个可以存储200个数据点的缓冲区。缓冲区名字叫做testData。
+TRACe:MAKE "testData", 200
+
+这个命令设置了在执行测量操作时，设备将进行10次测量
+COUN 10
+
+测量的类型为电流测量，并指定使用testData缓冲区来存储这些测量结果
+注意，本指令同时会返回测量结果，即第十次的测量的结果，因为MEASure:本身带读取属性
+MEASure:CURRent? "testData"
+
+这个命令查询默认缓冲区（defbuffer1）中当前存储的测量数据总数。
+TRACe:ACTual?
+
+这个命令用来查询名为testData的缓冲区中当前存储的数据总数
+TRACe:ACTual? "testData"
+```
+
+> 2_  :TRACe:ACTual:STARt?  与  :TRACe:ACTual:END?   
+
+指令用于得知一个缓冲区，其起始位置与结束位置,不加参数则将调用默认缓冲区defbuffer1
+
+```scpi
+对于缓冲区test1 得知它的起始位置
+:TRACe:ACTual:STARt? "test1" 
+对于缓冲区test1 得知它的结束位置
+:TRACe:ACTual:END? "test1"
+```
+
+
+> 3_ :TRACe:CLEar  
+
+清空目标缓冲区,不加参数则将调用默认缓冲区defbuffer1
+```scpi
+TRACe:CLEar "defbuffer1" 
+```   
+
+> 4_ :TRACe:DATA?   
+
+从目标缓冲区读取 x-y范围的数据  
+```scpi 
+
+从指定缓冲区返回从startIndex到endIndex的数据。
+:TRACe:DATA? <startIndex>, <endIndex>
+
+指定缓冲区名称后，从该缓冲区返回指定范围的数据。
+:TRACe:DATA? <startIndex>, <endIndex>, "<bufferName>"
+
+进一步指定要返回的数据元素，如电压值、电流值、时间戳等。
+:TRACe:DATA? <startIndex>, <endIndex>, "<bufferName>", <bufferElements>
+
+<bufferElements>：指定要返回的数据元素，可以是如下几种：
+    DATE：数据点的测量日期。
+    FORMatted：前面板显示的测量值。
+    READing：测量读数，根据测量功能设置。
+    RELative：相对时间点测量。
+    SOURce：源值，如果启用了回读，则为回读值。
+    STATus：与测量相关的状态信息等。
+
+
+
+# 示例
+从"buf100"获取前5个数据点的读数、源值和相对时间。
+TRAC:DATA? 1, 5, "buf100", READ, SOUR, REL
+
+获取读数和相对时间。
+TRAC:DATA? 1, 5, "buf100", READ, REL
+
+仅获取相对时间。
+TRAC:DATA? 1, 5, "buf100", REL
+
+返回"buf100"中前三个读数。
+TRAC:DATA? 1, 3, "buf100"
+```
+
+> 5_ :TRACe:DELete  
+
+当不需要一个缓冲区时，将其删除   
+
+```scpi
+:TRACe:DELete "<bufferName>"
+```
+
+> 6_ :TRACe:FILL:MODE   
+
+设置缓冲区的填充模式，决定缓冲区是持续填充还是只填充一次然后停止。  
+命令和查询（Command and query）——这意味着这个命令既可以设置信息也可以查询当前设置。   
+此命令的设置会在仪器复位、断电或通过设定保留下来。   
+
+对于默认缓冲区 defbuffer1 和 defbuffer2：连续填充（CONTinuous）。   
+对于用户定义的缓冲区：填充一次（ONCE）。   
+
+```scpi
+:TRACe:FILL:MODE <fillType>, "<bufferName>"    
+
+<fillType>：决定缓冲区的数据填充方式。
+    CONTinuous：缓冲区满后，新的数据会覆盖旧的数据。
+    ONCE：缓冲区满后停止填充，新的数据将被丢弃。  
+<bufferName>：缓冲区的名称，如果不指定，默认操作defbuffer1。   
+
+
+# 示例  
+创建缓冲区 
+TRACe:MAKE "testData", 100  
+
+查询当前填充模式
+TRACe:FILL:MODE? "testData"，若是ONCE表明当前模式为只填充一次  
+
+改为连续填充模式
+TRACe:FILL:MODE CONT, "testData"
+```
+
+> 7_ :TRACe:LOG:STATe  
+
+用于设置或查询指定读取缓冲区的信息事件记录状态。这个状态决定了当缓冲区完全空（0%填充）或完全满（100%填充）时，是否会在事件日志中记录这一信息。   
+
+对于默认缓冲区 defbuffer1 和 defbuffer2：开启（ON，1）   
+
+```scpi
+为指定的缓冲区设置日志记录状态。
+:TRACe:LOG:STATe <logState>, "<bufferName>"  
+```
+
+
+> 8_ :TRACe:MAKE  
+
+用于创建用户定义的读取缓冲区，仅命令（Command only）——这意味着这是一个执行型命令，不返回数据。此命令的设置在仪器复位、断电后不会保留，除非进行特定的保存设置操作。  
+
+
+```scpi
+创建一个新的读取缓冲区，名为 <bufferName>，大小为 <bufferSize>。
+:TRACe:MAKE "<bufferName>", <bufferSize>  
+
+在创建缓冲区时指定一个特定的缓冲区样式。
+:TRACe:MAKE "<bufferName>", <bufferSize>, <bufferStyle>  
+
+```
+
+> 9_ :TRACe:MATH  
+
+用于对存入指定读取缓冲区的测量数据执行数学表达式运算。这种操作允许用户在数据存储时即对其进行预处理，适用于需要即时数据处理的应用场景。  
+
+> 10_ :TRACe:POINts  
+
+用于设置或查询一个读取缓冲区可以存储的测量数据点数量。这使得用户可以根据需要调整缓冲区的大小，以适应不同的测量需求。   
+类型：命令与查询（Command and query）——表示该命令既可以设置值也可以查询值。   
+影响因素：该命令的设置在仪器重置或断电后不会被保存。  
+默认值：不存在默认值，因为这取决于特定缓冲区的当前设置。  
+
+```scpi
+:TRACe:POINts <newSize>, "<bufferName>"  
+:TRACe:POINts? "<bufferName>"
+
+<newSize>：新的缓冲区大小，如果设为0，则根据可用内存自动最大化缓冲区大小。
+<bufferName>：指定操作的缓冲区名称。如果没有指定，默认为 defbuffer1。
+
+# 示例
+TRACe:MAKE "testData", 100  
+将 testData 缓冲区的容量修改为300个读数
+TRACe:POINts 300, "testData"
+```
+
+> 11_ :TRACe:SAVE 与 :TRACe:SAVE:APPend
+
+:TRACe:SAVE 用于将指定读取缓冲区的数据保存到USB闪存驱动器上的文件中。   
+仅命令（Command only）——这意味着此命令用于执行操作，而不返回任何响应数据。    
+
+:TRACe:SAVE:APPend 用于将指定读取缓冲区的数据追加到USB闪存驱动器上的现有文件中。  
+这使得你可以在不覆盖旧数据的情况下，继续在同一个文件中保存新的测量数据。   
+
+> 12_ :TRACe:STATistics:AVERage?   
+
+用于查询指定读取缓冲区中所有读数的平均值。这是一个查询型命令，专门用于从设定的缓冲区中计算出平均读数值。  
+```scpi
+:TRACe:STATistics:AVERage? "<bufferName>"
+```
+
+> 13_ :TRACe:STATistics:CLEar
+
+用于清除与指定读取缓冲区相关联的统计信息，但不清除缓冲区中的读取数据。这对于在不删除原始数据的情况下重置统计计算非常有用。  
+
+
+> 14_ :TRACe:STATistics:MAXimum? 与 :TRACe:STATistics:MINimum?   
+
+别用于查询指定读取缓冲区中的最大值和最小值。
+
+> 15_ :TRACe:STATistics:PK2Pk?   
+
+用于返回指定读取缓冲区中所有读数的峰对峰值（即缓冲区中最大值与最小值之差）。  
+
+> 16_ :TRACe:STATistics:STDDev?  
+
+这个命令用来返回指定缓冲区中所有读数的标准偏差。标准偏差是衡量读数散布（即变异或分散）程度的一种统计量。  
+
+> 17_ :TRACe:TRIGger  
+
+这个命令用于触发测量，并将结果存储在指定的读取缓冲区中。在使用这个命令前，需要选择一个测量功能，并通过 COUNT 命令设置测量次数。  
+```scpi
+:TRACe:TRIGger 使用默认缓冲区进行触发测量。
+:TRACe:TRIGger "<bufferName>" 使用指定的缓冲区进行触发测量。
+```
+
+
+> 18_ :TRACe:WRITe:FORMat  
+
+用于设置在读取缓冲区中写入数据时的单位和数字位数。这个命令适用于可写（writable）或完全可写（full writable）的缓冲区样式，并且可以指定每个读取的单位和精确到的小数位数。  
 
 ### TRIGger
 
