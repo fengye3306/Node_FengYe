@@ -425,28 +425,37 @@ Keithley 2450 SourceMeter® 的 OUTPut 子系统主要是用来控制设备的�
 `SOURce`子系统主要用于配置和控制电流源和电压源的相关设置。该子系统提供了一系列命令，允许用户管理源配置列表（source configuration lists），这些列表存储了一组预定义的源设置，可以方便地被调用和管理。   
 
 
-> 1_ :SOURce[1]:CONFiguration:LIST:CATalog?     
+#### 源配置表
 
-在仪器里查找存储的所有“源配置列表”的名字。你可以想象成，每一个“配置列表”都包含了一套特定的设定，这些设定定义了仪器在进行测试时应该如何表现。这个指令的工作就是问仪器：“**你保存了哪些配置列表？**”
+源配置列表（Source Configuration List）   
+在测试测量设备（例如 Keithley 2450 SourceMeter）中，源配置列表是一个用于存储一组预定义的源输出设置的集合。这些设置可以包括电压、电流或功率的源值，以及其他相关参数。配置列表可以重复使用，确保测试的一致性和可重复性。   
+
+> 列出所有的源配置表
+
+`:SOURce[1]:CONFiguration:LIST:CATalog?`
+
+在仪器里查找存储的所有“源配置列表”的名字。
 
 ```cpp
 :SOUR:CONF:LIST:CAT?
 ```
 
-> 2_  :SOURce[1]:CONFiguration:LIST:CREate
+> 创建一个空的源配置列表
+
+`:SOURce[1]:CONFiguration:LIST:CREate`  
 
 该命令用于创建一个空的源配置列表，供用户存储配置索引。     
 
-源配置列表（Source Configuration List）   
-在测试测量设备（例如 Keithley 2450 SourceMeter）中，源配置列表是一个用于存储一组预定义的源输出设置的集合。这些设置可以包括电压、电流或功率的源值，以及其他相关参数。配置列表可以重复使用，确保测试的一致性和可重复性。   
 
 ```scpi
 # 创建新源配置列表 名为 MySourceList
 :SOUR:CONF:LIST:CRE "MySourceList"
 ```
 
-> 3_ :SOURce:CONFiguration:LIST:DELete   
-删除一个源配置列表  
+> 删除一个源配置列表,或是表中某一设置
+
+`:SOURce:CONFiguration:LIST:DELete`
+
 ```scpi 
 # 删除名为 MySourceList 的整个源配置列表。
 :SOURce:CONF:LIST:DEL "MySourceList"
@@ -456,22 +465,23 @@ Keithley 2450 SourceMeter® 的 OUTPut 子系统主要是用来控制设备的�
 ```
 
 
-> 4_ :SOURce[1]:CONFiguration:LIST:QUERy?   
+> 查询特定源配置表中某个 索引 所有设置和参数值
 
-用于查询特定源配置列表中某个配置索引（Index）所存储的所有设置和参数值  
+`:SOURce[1]:CONFiguration:LIST:QUERy?`
 
 ```scpi
 # 查询指定的 <name> 配置列表中第 <point> 个索引的相关信息。 
 :SOURce[1]:CONFiguration:LIST:QUERy? "<name>", <point>
 
-:SOUR:CONF:LIST:QUER? "MySourceList", 2
 # 查询配置列表 "MySourceList" 的第2个索引的内容。
+:SOUR:CONF:LIST:QUER? "MySourceList", 2
 ```
 
 
-> 5_ :SOURce[1]:CONFiguration:LIST:RECall  
+> 调用特定源配置列表中的某个配置索引，将该索引的参数设置应用到设备上
 
-此命令用于调用特定源配置列表中的某个配置索引，将该索引的参数设置应用到设备上  
+`:SOURce[1]:CONFiguration:LIST:RECall`
+
 
 ```scpi
 :SOURce[1]:CONFiguration:LIST:RECall "<name>", <index>
@@ -487,15 +497,17 @@ Keithley 2450 SourceMeter® 的 OUTPut 子系统主要是用来控制设备的�
 :SOUR:CONF:LIST:RECall "MySourceList"
 ```
 
-> 6_ :SOURce[1]:CONFiguration:LIST:SIZE?   
+> 查询指定源配置列表中包含的配置索引的数量  
 
-:SOURce[1]:CONFiguration:LIST:SIZE? 用于查询指定源配置列表中包含的配置索引的数量   
+`:SOURce[1]:CONFiguration:LIST:SIZE?`   
 
 
-> 7_ :SOURce[1]:CONFiguration:LIST:STORe  
 
-用于将当前活跃的源设置（例如电压、电流等配置参数）存储到指定的源配置列表中的一个配置索引中。   
-假设你现在设置了一个源（比如 5V 的电压输出），想保存这个配置方便以后直接调用，你可以用这个命令将当前的源配置保存到一个配置列表中。   
+> 将当前活跃的源设置（例如电压、电流等配置参数）存储到指定的源配置列表中的一个配置索引中
+
+`:SOURce[1]:CONFiguration:LIST:STORe`  
+
+将当前活跃的源设置（例如电压、电流等配置参数）存储到指定的源配置列表中的一个配置索引中。假设你现在设置了一个源（比如 5V 的电压输出），想保存这个配置方便以后直接调用，你可以用这个命令将当前的源配置保存到一个配置列表中。   
 
 ```scpi  
 :SOURce[1]:CONFiguration:LIST:STORe "<name>", <index>
@@ -506,7 +518,6 @@ Keithley 2450 SourceMeter® 的 OUTPut 子系统主要是用来控制设备的�
     表示源配置列表中的具体位置（索引号）。
     如果指定了索引，配置将存储到该位置；如果该位置已存在，则会覆盖原有的配置。
     如果没有指定索引，新配置会自动追加到列表的末尾。
-
 
 # 示例 
 
@@ -519,21 +530,17 @@ Keithley 2450 SourceMeter® 的 OUTPut 子系统主要是用来控制设备的�
 :SOURce:CONF:LIST:STORe "biasLevel"
 ```
 
-> 8_ :SOURce[1]:<function>:DELay    
+#### 源延时
 
-命令用于设置源的**手动**延迟时间，这个延迟会在源输出被激活后生效，确保源电平稳定后再进行测量。  
-当源输出一个电压或电流值时，可能需要一段时间让输出稳定。这个命令可以在测量之前设置一个等待时间，确保测量数据准确。
+1. 当源输出一个电压或电流值时，**潜在需要等待一段时间让输出稳定**。源延时可以在测量之前设置一个等待时间，确保测量数据准确。
+2. 并且，如果源输出的电平变化比较慢，**比如电容充电或电感性负载，需要时间稳定时**，就可以用这个命令设置延迟。
+3. 这是一个2450的特性，即如果设置了手动延迟，自动延迟（AutoDelay）会被关闭。反之手动延迟值会被自动延迟覆盖。  
+4. 延迟会应用于**第一次源输出**，以及之后每次**源输出幅度发生变化**时。  
 
-如果源输出的电平变化比较慢，比如电容充电或电感性负载，需要时间稳定时，就可以用这个命令设置延迟。
+> 手动设置源的延迟时间, 延迟会在源输出被激活后生效，确保源电平稳定后再进行测量
 
-2. 手动延迟与自动延迟:  
+`:SOURce[1]:<function>:DELay`
 
-如果设置了手动延迟（通过该命令），自动延迟（AutoDelay）会被关闭。   
-如果启用了自动延迟（AutoDelay），手动延迟值会被自动延迟覆盖。  
-手动延迟是你自己设定的固定时间。自动延迟会根据设备检测的稳定时间自动调整，但手动延迟一旦设置，自动延迟就会失效。
-
-延迟会应用于第一次源输出，以及之后每次源输出幅度发生变化时。  
-无功能参数:
 
 ```scpi 
 :SOURce[1]:<function>:DELay <value> 
@@ -570,9 +577,11 @@ Keithley 2450 SourceMeter® 的 OUTPut 子系统主要是用来控制设备的�
 :SOUR:CURR:DEL 5  
 ```
 
-> 8_ :SOURce[1]:<function>:DELay:AUTO   
+> 自动延迟
 
-用于开启或关闭自动延迟时间功能，也可以查询是否启用自动延迟。  
+`:SOURce[1]:<function>:DELay:AUTO`   
+
+用于开启或关闭自动延迟时间功能，同时也可以查询是否启用自动延迟。  
 如果开启了自动延迟，任何手动设置的延迟都会被自动延迟覆盖。如果手动设置了延迟，自动延迟会被禁用。  
 
 ```scpi  
@@ -580,12 +589,13 @@ Keithley 2450 SourceMeter® 的 OUTPut 子系统主要是用来控制设备的�
 :SOURce[1]:CURRent:DELay:AUTO OFF
 # 启用电压源的自动延迟:
 :SOURce[1]:VOLTage:DELay:AUTO ON
-
 # 查询电流源的自动延迟状态,（返回 1 表示开启，0 表示关闭）:
 SOUR:CURR:DEL:AUTO?
 ```
 
-> 9_ :SOURce[1]:<function>:DELay:USER<n>  
+> 预设几个自定义的等待时间（延迟），比如说电压源输出后，等5秒钟再进行测量 
+
+`:SOURce[1]:<function>:DELay:USER<n>`  
 
 ```scpi
 :SOUR:VOLT:DEL:USER1 5                // 将电压源的用户延迟1设置为5秒
@@ -598,12 +608,16 @@ SOUR:CURR:DEL:AUTO?
 ```
 
 这条命令让你可以预设几个自定义的等待时间（延迟），比如说电压源输出后，等5秒钟再进行测量。这些延迟特别适合那些需要时间稳定输出或延迟触发的复杂测量任务。
+通过触发模型的动态调用，你可以轻松地把这些延迟插入到测量流程中，完全按你的需求灵活配置！  
 
-通过触发模型的动态调用，你可以轻松地把这些延迟插入到测量流程中，完全按你的需求灵活配置！
+#### 高电容模式
 
-> 10_ :SOURce[1]:<function>:HIGH:CAPacitance   
+> 启用或禁用高电容模式
 
-该命令用于**启用或禁用高电容模式**（High Capacitance Mode）。  
+`:SOURce[1]:<function>:HIGH:CAPacitance`   
+
+> 高电容模式（High Capacitance Mode）   
+
 当仪器处于低电流模式并驱动高电容负载时，高电容模式通过调整输出特性，可以有效减少因负载特性导致的过冲、振铃和不稳定问题，从而提高测量稳定性。这种现象起源于电路中的动态响应和振荡特性， 高电容负载在通电时的瞬间会表现为一个低阻抗的短路，并且需要较大的瞬时电流进行充电
 
 在直流电路中，电阻是唯一影响电流的因素，因为电感和电容对直流电不起作用（稳态下电感看作短路，电容看作开路）。   
@@ -620,7 +634,12 @@ I = C \cdot \frac{dV}{dt}
 
 在电压变化率 @\frac{dV}{dt}@较大时，例如电路通电瞬间，电容器需要吸收大量瞬时电流，从而呈现低阻抗甚至短路特性。   
 
-> 11_ :SOURce[1]:<function>[:LEVel][:IMMediate][:AMPLitude]   
+#### 指定源功能
+
+
+> 该命令用于立即设置指定源功能（电流或电压）的固定输出幅度（即设置源的输出电平）
+
+`:SOURce[1]:<function>[:LEVel][:IMMediate][:AMPLitude]`   
 
 该命令用于立即设置指定源功能（电流或电压）的固定输出幅度（即设置源的输出电平）。如果输出已经开启，新设定的电平值将立即生效。
 这个命令就是用来 控制设备输出电压或电流的大小 的，直接告诉设备“输出多少伏电压”或者“输出多少安电流”，而且设置完会马上生效。  
@@ -635,41 +654,80 @@ SOUR:FUNC VOLT
 SOUR:VOLT 1
 ```
 
-> :SOURce[1]:<function>:<x>LIMit[:LEVel]  
 
-设置电流源和电压源的界限值，如果电流源工作，设置一个 电压上限，防止设备输出电压太高。
-如果电压源工作，设置一个 电流上限，防止设备输出电流太大。这就像是给设备加了一个“护栏”，避免工作条件超出你的预期。   
 
-1. 一旦输出超过限制值，设备会自动停止输出，以保护负载或自身的安全。  
-2. 如果你手动选择了测量范围，限制值需要至少为测量范围的 10.6%。自动范围则无影响  
-3. 如果你选择了一个不适合当前范围的限制值，设备会自动调整为一个合理的值，并提示你警告信息。   
+> 设置或查询数据源仪器的输出模式,指定设备是作为 电压源、电流源
+
+`:SOURce:FUNCtion`VOLTage：将设备设置为 电压源, CURRent：将设备设置为 电流源。   
+
+```scpi
+# 查询当前源模式
+SOUR:FUNC CURR
+
+# 设置设备为电压源：
+SOUR:FUNC VOLT
+```
+
+#### 源限位   
+
+> 强制保护性限位，指定源限位，当对应源输出超限位时将切断电源
+
+`:SOURce[1]:<function>:<x>LIMit[:LEVel]`   
+
+设置电流源和电压源的界限值，  
+如果电流源工作，设置一个 电压上限，防止设备输出电压太高。
+如果电压源工作，设置一个 电流上限，防止设备输出电流太大。      
+
+1. 输出超过限制值，设备**自动停止输出**，保护负载或自身的安全。  
+2. 假设手动选择了测量范围，限制值需要**至少为测量范围的 10.6%**。自动范围则无影响。 
+3. 当选择了一个不适合当前范围的限制值，设备会自动**调整为一个合理的值，并提示你警告信息**。   
 
 ```scpi 
 <function>：定义源模式
-
-CURRent：表示你是在控制电流源。
-VOLTage：表示你是在控制电压源。
+    CURRent：表示你是在控制电流源。
+    VOLTage：表示你是在控制电压源。
 <x>：定义限制类型
-
-I：电流限制（适用于电压源，防止电流过大）。
-V：电压限制（适用于电流源，防止电压过高）。
+    I：电流限制（适用于电压源，防止电流过大）。
+    V：电压限制（适用于电流源，防止电压过高）。
 <value>：设置限制的具体值
     电流源的电压限制范围：0.02 V 到 210 V
     电压源的电流限制范围：1 nA 到 1.05 A
 
-# 设置电流源的电压上限为 15V：
-:SOUR:CURR:VLIM 15
-
-# 查询电压源的电流限制值：
-:SOUR:VOLT:ILIM?
-
-# 设置电压源的电流限制为默认值：
-:SOUR:VOLT:ILIM DEF
-
-# 查看是否触发了限制（是否超出范围）： 
-:SOUR:CURR:VLIM:TRIP?
+:SOUR:CURR:VLIM 15    # 设置电流源的电压上限为 15V：
+:SOUR:VOLT:ILIM?      # 查询电压源的电流限制值：
+:SOUR:VOLT:ILIM DEF   # 设置电压源的电流限制为默认值： 
+:SOUR:CURR:VLIM:TRIP? # 查看是否触发了限制（是否超出范围）：
 ```
 
+> 检测设备的电流源或电压源是否超出了预先设置的限制值
+
+`:SOUR:CURR:VLIM:TRIP?`   
+0：未触发限制，输出正常。1：已触发限制，输出已被系统限制  
+
+```scpi
+SOUR:VOLT:ILIM:TRIP?
+```
+
+> 设置或查询过压保护（Overvoltage Protection，OVP） 
+
+`:SOURce[1]:<function>:PROTection[:LEVel] `   
+
+1. 在开启电源之前设置过压保护电压。
+2. 保护值应该小于或等于被测设备的最大耐受电压
+3. 如果输出电压尝试超过设置的保护值，设备将**主动限制电压**，防止过压发生。   
+
+```scpi 
+SOUR:VOLT:PROT PROT40 # 设置设备输出电压的过压保护限制为 40 V
+SOUR:VOLT:PROT?       # 查询当前过压保护设置
+SOUR:VOLT:PROT?       # 查询当前过压保护设置
+```
+该命令通过设置保护值来增强测试安全性，防止过压对设备或测试系统造成损害。   
+
+> 查询过压保护是否触发
+
+`:SOURce[1]:<function>:PROTection[:LEVel]:TRIPped?`
+
+> 电压或电流的输出范围
 
 
 ### STATus  
