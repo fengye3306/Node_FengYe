@@ -727,7 +727,150 @@ SOUR:VOLT:PROT?       # 查询当前过压保护设置
 
 `:SOURce[1]:<function>:PROTection[:LEVel]:TRIPped?`
 
-> 电压或电流的输出范围
+#### 量程
+
+> 设置源表量程  
+
+`:SOURce[1]:<function>:RANGe`
+
+> 开启、关闭自动量程功能
+
+`:SOURce[1]:<function>:RANGe:AUTO`
+
+#### 读回模式
+
+> 开启、关闭读回模式  
+
+开启读回模式仪器会测量“实际输出”的电压/电流值，然后再用这个真实值参与后续测量，这样你的测量结果就会更准确。然而，启用读回模式会降低源表运行速度。   
+
+假设你想用电压源输出 10V，然后测量流过负载的电流如果启用了读回模式：仪器会先检测一下“实际输出电压到底是多少”（比如可能是 9.98V），然后用这个真实的 9.98V 来计算负载上的电流。  
+如果关闭了读回模式：  
+仪器就直接假定你输出的电压是 10V，不管实际输出可能是 9.98V，直接用这个 10V 来测负载电流。      
+
+#### 扫描 
+
+> 配置清单扫描
+
+`:SOURce[1]:LIST:<function>`  
+这个命令的目的是设置一组自定义的电压或电流值，供仪器做“列表扫描（Sweep）”。  
+通俗地说，你可以告诉仪器：“按这个清单里的电压/电流值一个一个来，给我测试结果。  
+
+你可以定义一个最多 100 个点的列表，这些点可以是电压值或者电流值。仪器会按顺序输出这些电压/电流值，并在每个点上做一次测量，比如测电流或电压。  
+
+
+1. 如果你重复使用 :SOURce[1]:LIST:<function>，新的列表会覆盖旧的列表。
+2. 使用 :SOURce[1]:LIST:<function>:APPend 添加值到已有列表。  
+3. 使用 :SOURce[1]:SWEep:<function>:LIST 设置扫描时间等参数。
+
+
+```scpi
+
+# 重置仪器：
+*RST         
+
+# 配置测量功能（这里测量电流）：
+SENS:FUNC "CURR"
+SENS:CURR:RANG:AUTO ON   ; 自动选择电流范围
+SENS:CURR:RSEN OFF       ; 关闭四线测量
+
+# 设置源输出为电压模式，配置电压范围和电流限制：
+SOUR:FUNC VOLT
+SOUR:VOLT:RANG 20        ; 电压范围设置为 20V
+SOUR:VOLT:ILIM 1         ; 电流限制为 1A
+
+# 创建一个电压列表：  
+SOUR:LIST:VOLT 1, 5, 1, 5, 1, 5
+
+# 设置扫描命令，定义每个点持续的时间（200ms）：
+SOUR:SWE:VOLT:LIST 1, 0.2
+
+# 启动扫描并等待完成：
+INIT
+*WAI
+
+# 从默认缓冲区中获取测量结果：
+TRAC:DATA? 1, 6, "defbuffer1", SOUR, READ
+```
+
+
+> 在已有的电压/电流源列表后面追加新值   
+
+`:SOURce[1]:LIST:<function>:APPend`
+简单来说，如果你已经创建了一个电压或电流列表，但需要添加更多值，可以用这个命令把新值“排”到原来的列表后面。   
+
+
+> 当前设置的电压或电流列表中有多少个点（值）   
+
+`:SOURce[1]:LIST:<function>:POINts?`
+
+> 一个线性扫描（Linear Sweep），可以让设备在一段范围内（比如电压从 0 到 10V），按照设定的点数逐步变化。   
+
+`:SOURce[1]:SWEep:<function>:LINear:STEP`
+
+扫描的开始点（<start>）和结束点（<stop>）之间划分为多个测量点（<points>）。扫描时，设备会按设定值逐步变化，测量每个点上的数据。   
+
+
+```scpi
+:SOURce[1]:SWEep:<function>:LINear <start>, <stop>, <points>, <delay>, <count>, <rangeType>, <failAbort>, <dual>, "<bufferName>"   
+
+    <function>：选择是电压扫描 (VOLTage) 还是电流扫描 (CURRent)。
+    <start> 和 <stop>：扫描的起始和结束值。
+    <points>：扫描点的数量，范围是 2 到 1,000,000。
+    <delay>：每个点之间的延迟，默认自动延迟，也可以手动设定。
+        如果不需要延迟，可以设置为 0，否则设定一个具体值，比如 1e-3 表示 1 ms。
+    <count>：扫描循环次数，1 是执行一次，0 表示无限循环。
+    <rangeType>：设置扫描的量程选择方式（AUTO、BEST、FIXED）。
+        AUTO：根据每个点的值动态调整量程。
+        BEST：选择覆盖整个扫描范围的最佳固定量程，避免扫描中频繁切换量程。
+        FIXED：使用当前量程，不根据点的值调整。
+    <failAbort>：如果超过限制是否终止扫描（ON 终止，OFF 不终止）。
+        ON：立即停止扫描。
+        OFF：扫描继续，但限制超出的数据点无效。
+    <dual>：是否执行往返扫描（ON 是双向扫描，OFF 单向扫描）。
+        如果设为 ON，扫描会从 start 到 stop，然后再从 stop 返回到 start，完成一个完整的往返循环。
+    <bufferName>：存储测量数据的缓冲区。
+```
+
+
+```scpi 
+# 例程   
+
+*RST
+SOUR:FUNC VOLT
+SOUR:VOLT:RANG 20
+SENS:FUNC "CURR"
+SENS:CURR:RANG 100e-6
+SOUR:SWE:VOLT:LIN 0, 10, 20, 1e-3, 1, FIXED
+
+INIT # 启动扫描
+
+# 数据读取，这将返回从第 1 到第 20 个点的源电压和测量的电流数据。
+TRAC:DATA? 1, 20, "defbuffer1", SOUR, READ
+```
+
+> 这个命令用来配置线性步进扫描，用于设置一个从起始值到终止值的等步长扫描，并在每个步进点上进行测量。
+
+和线性扫描的区别就在于，步进扫描设置递增值是一个固定值（比如每次递增 0.25 A）。   
+
+```scpi
+SOUR:SWE:CURR:LIN:STEP -1.05, 1.05, .25, 10e-3, 1, FIXED
+    起始值：  -1.05 A
+    终止值：  1.05 A
+    步长：    0.25 A
+    每点延迟：10 ms
+    扫描次数：1 次
+    量程：   固定量程。
+```
+
+> 根据配置列表设置一个自定义的扫描   
+
+`:SOURce[1]:SWEep:<function>:LIST `   
+
+> 对数扫描  
+
+`:SOURce[1]:SWEep:<function>:LOG`
+
+
 
 
 ### STATus  
