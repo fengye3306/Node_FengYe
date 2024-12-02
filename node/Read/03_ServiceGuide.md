@@ -21,7 +21,7 @@
 19. Z 轴分析 (ZProfiling)
 20. 枚举 (Enumerations) 
 
-### 1_AZoom
+### 1.AZoom
 
 1. AZoom设置对话框（AZoomSetupDialog）
 2. 关闭AZoom（CloseAZoom）
@@ -37,7 +37,7 @@
 12. 设置AZoom光源（SetAZoomLight）
 13. 停止AZoom（StopAZoom）
 
-### 2_ BnR_KernelDriver
+### 2.BnR_KernelDriver
 
 > BnR_KernelDriver
 
@@ -97,7 +97,7 @@
 10. BnR_SetDatum（设置基准点）
 11. BnR_WriteAxisModuleRegister（写入轴模块寄存器）
 
-### 通用命令 CommonCommands  
+### 3.通用命令 CommonCommands  
 
 1. WinCal（WinCal）
 1. WinCalAutoCal（自动校准）
@@ -160,7 +160,7 @@
 58. ShowSplashScreen（显示启动画面）
 59. ShutdownVeloxWithSave（保存并关闭Velox）  
 
-### 低温工具（CryogenicTool）
+### 4.低温工具（CryogenicTool）
 
 1. CryoCommand（低温命令）
 2. CryoMoveBBPark（低温移动车床停靠）
@@ -175,7 +175,7 @@
 11. CryoStartRefill（开始低温加注）
 12. CryoStopRefill（停止低温加注）
 
-### 核心驱动（KernelDriver）   
+### 5.核心驱动（KernelDriver）   
 
 > 1_Alignment（对准）
 
@@ -450,7 +450,7 @@
 26. SetProbeTablePoint（设置探针台点）
 27. StopProbeMovement（停止探针移动）
 
-### 7_内核设置（KernelSetup）  
+### 6.内核设置（KernelSetup）  
 
 1. LoadConfigFile（加载配置文件）  
 2. ReadKernelData（读取内核数据）  
@@ -459,7 +459,7 @@
 5. SaveFileTreeAs（将文件树另存为）  
 6. SaveKernelDataAs（将内核数据另存为）  
 
-### 8_加载器
+### 7.加载器
 
 1. AbortJob（中止任务）  
 2. ConfirmRecipe（确认配方）  
@@ -502,7 +502,7 @@
 39. UpdateCassetteStatus（更新载体状态）  
 40. UpdateWaferID（更新晶圆ID）  
 
-### 9_消息服务器 (MsgServer) 
+### 8.消息服务器 (MsgServer) 
 
 1. ChangeDemoRsp（更改演示响应）  
 2. GetDemoMode（获取演示模式）  
@@ -512,7 +512,7 @@
 6. SetDemoMode（设置演示模式）  
 7. ShutdownVelox（关闭Velox）  
 
-### 10_通知 (Notifications)   
+### 9.通知 (Notifications)   
 
 1. AlertNotification（警报通知）  
 2. AlignmentModeChange（对准模式变化）  
@@ -560,14 +560,14 @@
 44. WMSetupChange（WM设置变化）  
 45. ZoomLevelChange（缩放级别变化）  
 
-### 11_脚本功能 (Scripting) 
+### 10.脚本功能 (Scripting) 
 
 1. CloseCommunicator（关闭通讯器）  
 2. DoScript（执行脚本）  
 3. GetRunStatus（获取运行状态）  
 4. StartScript（启动脚本）  
 
-### 12_Spectrum（光谱）   
+### 11.Spectrum（光谱）   
 
 > 相机（Camera）
 
@@ -677,7 +677,7 @@
 
 
 
-### 13_子芯片窗口（SubdieWindow）
+### 12.子芯片窗口（SubdieWindow）
 
 1. 捕获自动化探针布局（CaptureAutomationProbeLayout）  
 2. 删除自动化探针布局（DeleteAutomationProbeLayout）  
@@ -685,8 +685,7 @@
 4. 设置自动化探针布局（SetAutomationProbeLayout）  
 5. 显示子芯片窗口（ShowSubdieWindow）  
 
-### 14_表格视图（TableView）  
-
+### 13.表格视图（TableView）  
 
 1. 关闭表格视图（CloseTableView）  
 2. 读取夹具站点位置（ReadChuckSitePosition）  
@@ -698,8 +697,7 @@
 8. 步进探针站点（StepProbeSite）  
 9. 步进显微镜站点（StepScopeSite）    
 
-### 15_测试仪（Tester）   
-
+### 14.测试仪（Tester）   
 
 1. 批次结束（EndOfLot）  
 2. 晶圆结束（EndOfWafer）  
@@ -718,11 +716,11 @@
 15. 验证晶圆启动（VerifyWaferStart）    
 
 
-### 16_工具栏（Toolbar）  
+### 15.工具栏（Toolbar）  
 
 1. 显示工具栏配置（ToolbarShowConfig）    
 
-### 17_TTL（TTL）
+### 16.TTL（TTL）
 
 1. 取消TTL测试（CancelTTLTest）  
 2. 执行TTL测试（DoTTLTest）  
@@ -731,7 +729,7 @@
 5. 设置TTL线路（SetTTLLine）  
 6. 启动TTL测试（StartTTLTest）  
 
-### 18_晶圆地图 (WaferMap)
+### 17.晶圆地图 (WaferMap)
 
 
 1. WaferMap (WaferMap)
@@ -885,7 +883,7 @@
 149. SetBinCode (设置箱代码)
 150. SetBinTableSize (设置箱表大小)
 
-### Z轴分析(ZProfiling)
+### 18.Z轴分析(ZProfiling)
 
 1. ZProfiling (Z轴轮廓)
 2. AddZProfilePoint (添加Z轴轮廓点)
@@ -903,7 +901,7 @@
 14. StepFirstZProfilePoint (步骤第一Z轴轮廓点)
 15. StepNextZProfilePoint (步骤下一Z轴轮廓点)
 
-### Enumerations (枚举)  
+### 19.Enumerations (枚举)  
 
 2. AccessLevel (访问级别)
 3. AlignmentMode (对准模式)
