@@ -110,7 +110,7 @@ Cell 是一种自包含的电路单元，通常实现一个特定的功能。这
 * IO单元（Input/Output Cells）：用于与外部电路或者其他模块连接。
 例如：输入缓冲器（Input Buffer）、输出缓冲器（Output Buffer）等。
 
-
+### 集成电路的封装与设计架构
 
 
 
