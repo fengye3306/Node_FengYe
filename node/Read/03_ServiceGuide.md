@@ -235,26 +235,27 @@ MCM的目标是将多个功能不同但独立的芯片组合在一起，通常�
 
 ### 2.BnR_KernelDriver
 
-> BnR_KernelDriver
+内核驱动程序（Kernel Driver）
 
-1. 系统（System）
-2. BnR_CreateSdmSystemDump（创建Sdm系统转储）
-3. BnR_DoInternalTask（执行内部任务）
-4. BnR_EchoData（回显数据）
-5. BnR_GetAnalogIO（获取模拟输入输出）
-6. BnR_GetControllerData（获取控制器数据）
-7. BnR_GetControllerType（获取控制器类型）
-8. BnR_GetDataIterator（获取数据迭代器）
-9. BnR_GetInput（获取输入）
-10. BnR_GetOutput（获取输出）
-11. BnR_GetStartupStatus（获取启动状态）
-12. BnR_GetStationType（获取站点类型）
-13. BnR_ReadMessage（读取消息）
-14. BnR_ReportKernelVersion（报告内核版本）
-15. BnR_ResetController（重置控制器）
-16. BnR_SetAnalogOutput（设置模拟输出）
-17. BnR_SetOutput（设置输出）
-18. BnR_WriteMessage（写入消息）
+> 系统（System）
+
+1. BnR_CreateSdmSystemDump（创建Sdm系统转储）
+2. BnR_DoInternalTask（执行内部任务）
+3. BnR_EchoData（回显数据）
+4. BnR_GetAnalogIO（获取模拟输入输出）
+5. BnR_GetControllerData（获取控制器数据）
+6. BnR_GetControllerType（获取控制器类型）
+7. BnR_GetDataIterator（获取数据迭代器）
+8. BnR_GetInput（获取输入）
+9. BnR_GetOutput（获取输出）
+10. BnR_GetStartupStatus（获取启动状态）
+11. BnR_GetStationType（获取站点类型）
+12. BnR_ReadMessage（读取消息）
+13. BnR_ReportKernelVersion（报告内核版本）
+14. BnR_ResetController（重置控制器）
+15. BnR_SetAnalogOutput（设置模拟输出）
+16. BnR_SetOutput（设置输出）
+17. BnR_WriteMessage（写入消息）
 
 > 运动（Movement）  
 
