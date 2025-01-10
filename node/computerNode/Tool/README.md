@@ -1,5 +1,4 @@
 
-<!-- {docsify-ignore-all} -->
-# Tool
+# 工具
 
 工具

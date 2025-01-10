@@ -1,7 +1,3 @@
 * [返回](../README.md)
-* [Cmake](./Cmake.md)
+* [cmake](./cmake.md)
 * [git](./git.md)
-* [conda](./conda.md)
-* [Docker](./docker.md)
-* [Vcpkg](./Vcpkg.md)
-* [交叉编译器](./crossCompiler.md)
