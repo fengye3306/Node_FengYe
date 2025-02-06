@@ -9,16 +9,16 @@ from Qt import QtWidgets
 from NodeGraphQt import NodeGraph, BaseNode
 ```
 
-## 节点   
+## 自制节点工厂  
 
-### 节点重写  
+> 实现一个节点工厂必要配置 
 
 ```py
 # create a node class object inherited from BaseNode.
 class MNode(BaseNode):
 
-    # unique node identifier domain.
     # 唯一标识符
+    # unique node identifier domain.
     __identifier__ = 'io.github.jchanvfx'
 
     # initial default node name.
@@ -26,40 +26,84 @@ class MNode(BaseNode):
     NODE_NAME = 'Foo Node'
 
     # 构造函数
+    # construct
     def __init__(self):
         super(MNode, self).__init__()
-        # create an input port.
-        self.add_input('in', color=(180, 80, 0))
-        # create an output port.
-        self.add_output('out')
 ```
 
 * **self等价于c++类中的this**,其指向了当前对象实例。
 
-> 重写节点添加窗口  
+### 小部件嵌入  
 
-```cpp
+文档：`http://chantonic.com/NodeGraphQt/api/node_widgets.html#embedded-node-widgets` 
+
+> 复选框 combbox 
+
+```py
+# 工厂生产  
 items = ['apples', 'bananas', 'pears', 'mangos', 'oranges']
 self.add_combo_menu('my_list', 'My List', items)
 ```
 
-
-
-
-### 节点创建  
-
 ```py
-# create two nodes.
-node_a = graph.create_node('io.github.jchanvfx.MNode', name='node A')
-node_b = graph.create_node('io.github.jchanvfx.MNode', name='node B', pos=(300, 50))
+# 节点对象可通过set_property 配置所有复选框 例如
+node = MyListNode()
+node.set_property('my_list', 'mangos')
 ```
 
-### 节点相连
+### 自定义窗口嵌入
+
+将qt窗口封装于 NodeBaseWidget 派生类中以 加入节点框架, 将NodeBaseWidget 派生类组合至某一特定节点工厂。  
+
 
 ```py
-# node_a节点 输出端口0 连上 节点node_b输入端口0
-node_a.set_output(0, node_b.input(0))
+class NodeWidget_Show2DImage(NodeBaseWidget):
+
+    def __init__(self, parent=None):
+        super(NodeWidget_Show2DImage, self).__init__(parent)
+        
+        # Wid_ShowImage 是你实现的一个2d图像窗口
+        self.set_custom_widget(Wid_ShowImage())
+
+    def get_value(self):
+        widget = self.get_custom_widget()
+        return 'null'
+    
+    def set_value(self, value):
+        return
+
+class Node_ShowImage(BaseNode):
+
+    __identifier__  = 'Node.MV'
+    NODE_NAME       = 'show image'
+
+    def __init__(self):
+        super(Node_ShowImage, self).__init__()
+        
+        node_widget = NodeWidget_Show2DImage(self.view)
+        self.add_custom_widget(node_widget, tab='Custom')
+
+
 ```
+
+
+
+
+### 节点端口  
+
+```py
+def __init__(self):
+    super(MyNode, self).__init__()
+
+    # input
+    self.add_input('foo')   # 端口名foo
+    self.add_input('hello') # 端口名hello
+
+    # output
+    self.add_output('bar')
+    self.add_output('world')
+```
+
 
 
 ## 视图  
@@ -81,7 +125,6 @@ graph_widget.show()
 
 app.exec_()
 ```
-
 
 ### 视图挂载节点工厂
 
