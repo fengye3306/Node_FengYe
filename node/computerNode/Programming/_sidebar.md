@@ -1,11 +1,13 @@
 * [返回](../README.md)
-* **基础**
+
+* **Public**
     * [多线程](./00_thread.md)
     * [TBB启程](./00_tbb.md)
-    * [环境配置](./01_path.md)
-* **技巧**
+* **python**
+    * [NodeGraphQt](./py_NodeGraphQt.md)
+* **cpp**
     * [获取变量名字符串](./02_CPP_NODE_STYLE_READ_FLOAT.md)  
-* **问题与解决**
+    * [知名库编译](./01_path.md)
     
 
 

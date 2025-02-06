@@ -1,5 +1,0 @@
-* [返回](../README.md)
-* [CloudCompare](./CloudCompare/)
-* [nodeeditor](./nodeeditor/)
-* [QuantLib](./QuantLib/)
-* [Qt](./QT/)
