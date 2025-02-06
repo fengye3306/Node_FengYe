@@ -61,7 +61,6 @@ class NodeWidget_Show2DImage(NodeBaseWidget):
 
     def __init__(self, parent=None):
         super(NodeWidget_Show2DImage, self).__init__(parent)
-        
         # Wid_ShowImage 是你实现的一个2d图像窗口
         self.set_custom_widget(Wid_ShowImage())
 
@@ -141,3 +140,36 @@ graph.register_node(FooNode)
 #         标题： n_a
 node_a = graph.create_node('io.github.jchanvfx.FooNode', name='n_a')
 ```
+
+
+
+
+
+
+## 属性面板   
+
+PropertiesBinWidget 节点属性管理器。 是抽取节点属性管理问题的设计模式产物。  
+对场景基类进行重写,可以实现使得当任意节点被双击后调出节点属性管理器。  
+
+```py
+class MyNodeGraph(NodeGraph):
+
+    def __init__(self, parent=None):
+        super(MyNodeGraph, self).__init__(parent)
+
+        # _prop_bin 属性
+        self._prop_bin = PropertiesBinWidget(node_graph=self)
+        self._prop_bin.setWindowFlags(QtCore.Qt.Tool)
+
+        # wire signal.
+        self.node_double_clicked.connect(self.display_prop_bin)
+
+    def display_prop_bin(self, node):
+        """
+        function for displaying the properties bin when a node
+        is double clicked
+        """
+        if not self._prop_bin.isVisible():
+            self._prop_bin.show()
+```
+
