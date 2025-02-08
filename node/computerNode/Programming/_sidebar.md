@@ -8,6 +8,6 @@
 * **cpp**
     * [获取变量名字符串](./02_CPP_NODE_STYLE_READ_FLOAT.md)  
     * [知名库编译](./01_path.md)
-    
-
+    * [节点流设计思路](./myframework_NodeStream.md)
+    * [QGraphicsView调优]
 
