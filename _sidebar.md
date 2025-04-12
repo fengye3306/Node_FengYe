@@ -1,4 +1,3 @@
 
-* [计算机](./node/computerNode/ "计算机")
-* [数学](./node/math/ "数学")
-* [阅读](./node/Read/ "阅读")
+* [工学](./node/Engineering/ "工学")
+* [阅读](./node/read/ "阅读")
