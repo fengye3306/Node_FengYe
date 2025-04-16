@@ -57,7 +57,6 @@ pyocd list
 
 > 烧录   
 
-
 通过CMSIS-DAP调试器，向指定目标芯片 STM32F4 系列烧录文件
 ```sh
 openocd -f interface/cmsis-dap.cfg -f target/stm32f4x.cfg ^
